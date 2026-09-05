@@ -1,0 +1,22 @@
+.DS_Store
+.cache/
+.env
+.env.*
+!.env.example
+
+.venv/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+tmp/
+output/
+*.log
+
+# Large/source research artifacts and disposable OCR.
+research/papers/original/*
+!research/papers/original/README.md
+research/papers/extracted/*
+!research/papers/extracted/README.md
+

@@ -1,0 +1,6 @@
+- id: owasp-agent-memory-guard
+  repository: "https://github.com/OWASP/www-project-agent-memory-guard.git"
+  revision: "b3a7f34970c47d7ca6ff9e0691544b6721eb7ae2"
+  role: "seed payload corpus and write-time defense baseline"
+  caveat: "Published benchmark is operation-level; lifecycle claims require independent W/E/F evaluation."
+

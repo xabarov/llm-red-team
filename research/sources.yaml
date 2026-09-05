@@ -1,0 +1,47 @@
+- id: memsecbench-2607.27080
+  title: "MemSecBench: Tracking Agent Memory Poisoning from Persistence to Consequence and Repair"
+  authors: ["Xuanze Chen", "Xukang Xie", "Wentao Fu", "Jiajun Zhou", "Shanqing Yu", "Qi Xuan"]
+  year: 2026
+  version: v1
+  url: "https://arxiv.org/abs/2607.27080v1"
+  pdf_url: "https://arxiv.org/pdf/2607.27080v1"
+  doi: "10.48550/arXiv.2607.27080"
+  license: "arXiv non-exclusive distribution license; no general adaptation permission stated"
+  local_file: "papers/original/memsecbench-2607.27080.pdf"
+  sha256: "a596c1a913fff9ccd83b0b9844e49d9629cfd339e28a058b8e575abd774c14ab"
+  extraction: "embedded text layer (28 pages); visually sampled"
+  russian_material: "papers/ru/memsecbench-2607.27080/summary.md"
+  adaptation: "page-by-page Russian summary; no full translation"
+  status: summarized
+
+- id: untrusted-input-trusted-memory-2606.04329
+  title: "From Untrusted Input to Trusted Memory: A Systematic Study of Memory Poisoning Attacks in LLM Agents"
+  authors: ["Pritam Dash", "Tongyu Ge", "Aditi Jain", "Tanmay Shah", "Zhiwei Shang"]
+  year: 2026
+  version: v2
+  url: "https://arxiv.org/abs/2606.04329v2"
+  pdf_url: "https://arxiv.org/pdf/2606.04329v2"
+  doi: "10.48550/arXiv.2606.04329"
+  license: "CC BY 4.0"
+  local_file: "papers/original/untrusted-input-trusted-memory-2606.04329.pdf"
+  sha256: "36999ed0cb2d15b93897fa1f8be9ff2291516b633889e16e377f19db4288f482"
+  extraction: "embedded text layer (14 pages); visually sampled"
+  russian_material: "papers/ru/untrusted-input-trusted-memory-2606.04329/summary.md"
+  adaptation: "page-by-page Russian summary; no full translation"
+  status: summarized
+
+- id: agents-remember-too-much-2607.06595
+  title: "When Agents Remember Too Much: Memory Poisoning Attacks on Large Language Model Agents"
+  authors: ["George Torres", "Sharad Shrestha", "Satyajayant Misra"]
+  year: 2026
+  version: v1
+  url: "https://arxiv.org/abs/2607.06595v1"
+  pdf_url: "https://arxiv.org/pdf/2607.06595v1"
+  doi: "10.48550/arXiv.2607.06595"
+  license: "CC BY 4.0"
+  local_file: "papers/original/agents-remember-too-much-2607.06595.pdf"
+  sha256: "016cb5a5968aecd771c0af6e9eee298931173012041f2c132a40bbdabd26c14b"
+  extraction: "embedded text layer (17 pages); visually sampled"
+  russian_material: "papers/ru/agents-remember-too-much-2607.06595/summary.md"
+  adaptation: "page-by-page Russian summary; no full translation"
+  status: summarized
