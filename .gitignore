@@ -20,3 +20,7 @@ research/papers/original/*
 research/papers/extracted/*
 !research/papers/extracted/README.md
 
+# Keep raw/private coordination notes local. Only the normalized task description
+# belongs in version control.
+tz/*
+!tz/description.md
