@@ -92,3 +92,7 @@ OpenRouter; отдельный Compose override добавляет локаль�
 - tool arguments проверяются относительно идентичности пользователя;
 - evaluator отделён от атакуемого агента и получает только зафиксированные доказательства;
 - каждый прогон начинается с чистого snapshot или уникального namespace.
+
+Подробная white-box заметка по памяти upstream-стенда:
+[`docs/stand-memory-model.md`](stand-memory-model.md). Главный риск для MVP —
+глобальная `agent_policy_memories`, которая подмешивается в prompt всем клиентам.

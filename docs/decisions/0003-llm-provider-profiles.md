@@ -12,7 +12,9 @@
 ## Решение
 
 OpenRouter становится профилем по умолчанию при наличии ключа и используется для
-атакуемого агента, будущих planner/mutator и semantic judge. Конкретные model slug,
+атакуемого агента, будущих planner/mutator и semantic judge. Research agent по
+умолчанию использует `openai/gpt-5-mini`, а memory finalizer/summarizer —
+`openai/gpt-4.1-mini` с большим structured-output лимитом. Конкретные model slug,
 лимиты и параметры закрепляются для каждого эксперимента. Ollama сохраняется как
 явный локальный профиль для smoke, offline-разработки и резервного демо.
 

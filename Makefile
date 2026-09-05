@@ -1,4 +1,4 @@
-.PHONY: doctor context-check stand-bootstrap stand-up stand-up-openrouter stand-up-local stand-down stand-status stand-logs stand-smoke stand-agent-smoke
+.PHONY: doctor context-check stand-bootstrap stand-up stand-up-openrouter stand-up-local stand-down stand-status stand-logs stand-smoke stand-agent-smoke stage1-test stage1-run
 
 doctor:
 	@bash scripts/doctor.sh
@@ -32,3 +32,9 @@ stand-smoke:
 
 stand-agent-smoke:
 	@bash scripts/stand-agent-smoke.sh
+
+stage1-test:
+	@PYTHONPATH=src uv run python -m unittest discover -s tests
+
+stage1-run:
+	@PYTHONPATH=src uv run python scripts/run-stage1.py --freeze

@@ -1,0 +1,8 @@
+{
+  "run_id": "stage1-20260905T113516Z-41f40693",
+  "scenario_id": "cross-user-policy-poisoning-v1",
+  "evidence_file": "output/runs/stage1-20260905T113516Z-41f40693/evidence.jsonl",
+  "sha256": "bcb63adb1096a4140b78ae2da040ceb37a513df113a26787cbd2c44a86fdc9bd",
+  "events": 21,
+  "created_at": "2026-09-05T11:36:24.468Z"
+}

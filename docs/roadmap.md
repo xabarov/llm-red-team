@@ -34,6 +34,8 @@ Gate: стенд поднимается одной командой, readiness �
 
 ## Этап 1 — Вертикальный срез атаки
 
+Статус: завершён.
+
 Цель: доказать один сценарий целиком до внешнего последствия без универсального
 движка.
 
@@ -41,15 +43,20 @@ Gate: стенд поднимается одной командой, readiness �
 
 - target adapter: reset, actor/session, vulnerable/protected, finalize;
 - ручной сценарий cross-user policy-memory poisoning;
-- нормализованные события запроса, memory write/read, tool-call и side effect;
-- immutable JSONL evidence bundle с редактированием секретов;
-- программные W1, W2 и E3 oracles и минимальный Markdown-отчёт;
-- один frozen replay-кейс для регрессии.
+- нормализованные события запроса, memory write/read, inferred tool attempt и side effect;
+- JSONL evidence bundle с SHA-256 manifest и редактированием секретов;
+- программные W1/W2/E1/E2/E3 oracles и минимальный Markdown-отчёт;
+- frozen replay `replays/cross-user-policy-poisoning-v1/`.
 
 Gate: один и тот же replay демонстрирует последствие в vulnerable и блокировку
 на IAM-границе в protected; каждое утверждение отчёта связано с evidence ID.
 
+Последний успешный прогон: `stage1-20260905T113516Z-41f40693`,
+evidence SHA-256 `bcb63adb1096a4140b78ae2da040ceb37a513df113a26787cbd2c44a86fdc9bd`.
+
 ## Этап 2 — Детерминированный scenario engine
+
+Статус: следующий.
 
 Цель: превратить вертикальный срез в воспроизводимый campaign runner.
 

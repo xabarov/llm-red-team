@@ -1,0 +1,11 @@
+[project]
+name = "llm-red-team"
+version = "0.1.0"
+description = "Hackathon workspace for agent memory red-team experiments."
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+

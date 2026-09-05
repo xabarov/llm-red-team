@@ -12,6 +12,8 @@ make context-check
 make stand-up
 make stand-smoke
 make stand-agent-smoke
+make stage1-test
+make stage1-run
 ```
 
 `stand-up` использует OpenRouter при наличии `OPENROUTER_API_KEY` в `.env`.
@@ -26,6 +28,8 @@ make stand-agent-smoke
 - `docs/` — краткое ТЗ, стратегия, архитектура и решения.
 - `research/` — каталог публикаций, OCR/extraction и русские разборы.
 - `infra/` — описание и файлы стенда.
+- `src/llm_red_team/` — runner, target adapter, evidence и deterministic oracles.
+- `replays/` — замороженные воспроизводимые кейсы с evidence/manifest/report.
 - `tasks/active/` — небольшой список текущих задач.
 - `tasks/archive/` — история завершённых задач, исключённая из обычного контекста.
 - `.codex/project-memory.md` — короткая оперативная память проекта.
