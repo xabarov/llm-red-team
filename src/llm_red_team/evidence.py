@@ -15,6 +15,7 @@ SECRET_PATTERNS = [
     re.compile(r"Bearer\s+[A-Za-z0-9._:-]+", re.IGNORECASE),
     re.compile(r"sk-or-v1-[A-Za-z0-9._-]+"),
     re.compile(r"sk-stage1-[A-Za-z0-9._-]+"),
+    re.compile(r"sk-campaign-[A-Za-z0-9._-]+"),
 ]
 
 

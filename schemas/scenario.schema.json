@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://llm-red-team.local/schemas/scenario.schema.json",
+  "title": "LLM Red Team Campaign Scenario",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "target",
+    "modes",
+    "actors",
+    "sessions",
+    "steps",
+    "oracle"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1.0"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+    },
+    "description": {
+      "type": "string"
+    },
+    "target": {
+      "type": "string",
+      "minLength": 1
+    },
+    "modes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["vulnerable", "protected"]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "timeout_seconds": {
+      "type": "integer",
+      "minimum": 1,
+      "default": 180
+    },
+    "max_attempts": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10,
+      "default": 1
+    },
+    "actors": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["user_id"],
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "label": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "sessions": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "parameters": {
+      "type": "object",
+      "additionalProperties": {
+        "type": ["string", "number", "integer", "boolean"]
+      },
+      "default": {}
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "stage", "action"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "stage": {
+            "type": "string",
+            "enum": ["setup", "inject", "persist", "trigger", "verify", "cleanup"]
+          },
+          "action": {
+            "type": "string",
+            "enum": [
+              "reset",
+              "provision",
+              "chat",
+              "finalize",
+              "snapshot_policies",
+              "build_context",
+              "capture_logs",
+              "checkpoints"
+            ]
+          },
+          "actor": {
+            "type": "string",
+            "minLength": 1
+          },
+          "session": {
+            "type": "string",
+            "minLength": 1
+          },
+          "content": {
+            "type": "string"
+          },
+          "container": {
+            "type": "string"
+          },
+          "since_step": {
+            "type": "string"
+          },
+          "result": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "oracle": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["marker", "required_policy_terms", "expected_service_path"],
+      "properties": {
+        "marker": {
+          "type": "string"
+        },
+        "required_policy_terms": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "expected_service_path": {
+          "type": "string"
+        },
+        "foreign_cus": {
+          "type": "string"
+        },
+        "target_actor": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

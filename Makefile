@@ -1,4 +1,4 @@
-.PHONY: doctor context-check stand-bootstrap stand-up stand-up-openrouter stand-up-local stand-down stand-status stand-logs stand-smoke stand-agent-smoke stage1-test stage1-run
+.PHONY: doctor context-check stand-bootstrap stand-up stand-up-openrouter stand-up-local stand-down stand-status stand-logs stand-smoke stand-agent-smoke stage1-test stage1-run scenario-validate campaign-run
 
 doctor:
 	@bash scripts/doctor.sh
@@ -38,3 +38,9 @@ stage1-test:
 
 stage1-run:
 	@PYTHONPATH=src uv run python scripts/run-stage1.py --freeze
+
+scenario-validate:
+	@PYTHONPATH=src uv run python scripts/run-campaign.py --validate-only
+
+campaign-run:
+	@PYTHONPATH=src uv run python scripts/run-campaign.py --freeze

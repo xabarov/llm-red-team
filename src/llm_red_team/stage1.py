@@ -13,14 +13,19 @@ from typing import Any
 
 from llm_red_team.checkpoints import Checkpoint, all_passed, evaluate_mode
 from llm_red_team.evidence import EvidenceWriter
+from llm_red_team.scenario import load_scenario as load_dsl_scenario
+from llm_red_team.scenario import stage1_config
 from llm_red_team.target import StandTarget
 
 
 MODES = ("vulnerable", "protected")
 
 
-def load_scenario(path: Path) -> dict[str, Any]:
-    return json.loads(path.read_text(encoding="utf-8"))
+def load_scenario(path: Path, run_id: str = "") -> dict[str, Any]:
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if "schema_version" in data:
+        return stage1_config(load_dsl_scenario(path), run_id=run_id)
+    return data
 
 
 def answer_content(response: dict[str, Any]) -> str:
@@ -227,8 +232,8 @@ def main() -> int:
     args = parser.parse_args()
 
     repo_root = Path.cwd()
-    scenario = load_scenario(args.scenario)
     run_id = f"stage1-{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')}-{uuid.uuid4().hex[:8]}"
+    scenario = load_scenario(args.scenario, run_id=run_id)
     run_dir = args.output_dir / run_id
     evidence = EvidenceWriter(run_dir / "evidence.jsonl", run_id=run_id, scenario_id=scenario["id"])
     target = StandTarget(repo_root=repo_root)
@@ -263,4 +268,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
