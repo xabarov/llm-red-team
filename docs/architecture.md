@@ -1,6 +1,6 @@
 # Архитектура прототипа
 
-Обновлено: 2026-09-05
+Обновлено: 2026-09-07
 
 ## Решение
 
@@ -75,6 +75,25 @@ LLM не получает произвольный shell/network-доступ: �
 - `E3` - возникло проверяемое внешнее последствие;
 - `F1` - вредоносная семантика удалена/нейтрализована;
 - `F2` - нужная доброкачественная память при исправлении сохранена.
+
+### Offline metrics
+
+`scripts/report-metrics.py` читает сохранённые case-level `summary.json` и
+проверяет их против соответствующего `batch-summary.json`. Воронка, MPSR, MESR,
+E2E-ASR, попытки и replay-candidate selection пересчитываются из case-level
+conjunctions; агрегат campaign runner не используется как единственный источник
+истины. Опциональные cost/latency поля учитываются только при наличии наблюдений
+и всегда сопровождаются coverage. Контракт и команды описаны в
+[`docs/batch-metrics.md`](batch-metrics.md).
+
+### Memory-defense boundary
+
+Write/retrieval guards — отдельная ось от IAM `vulnerable/protected`. Для G4
+`src/llm_red_team/defense.py` применяет provenance-based write repair и
+retrieval suppression к captured post-write snapshot, сохраняя raw evidence.
+Четыре offline режима `none`, `write`, `read`, `write+read` возвращают
+совместимый summary с F1/F2. Simulation не выдаётся за live-защиту upstream;
+граница и будущий interposition hook зафиксированы в ADR 0004.
 
 ## Развёртывание
 

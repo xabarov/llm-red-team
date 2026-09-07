@@ -1,4 +1,4 @@
-.PHONY: doctor context-check stand-bootstrap stand-up stand-up-openrouter stand-up-local stand-down stand-status stand-logs stand-smoke stand-agent-smoke stage1-test stage1-run scenario-validate campaign-run
+.PHONY: doctor context-check stand-bootstrap stand-up stand-up-openrouter stand-up-local stand-down stand-status stand-logs stand-smoke stand-agent-smoke stage1-test stage1-run planner-draft planner-openrouter scenario-generate scenario-validate campaign-run batch-metrics guarded-validate guarded-eval
 
 doctor:
 	@bash scripts/doctor.sh
@@ -39,8 +39,26 @@ stage1-test:
 stage1-run:
 	@PYTHONPATH=src uv run python scripts/run-stage1.py --freeze
 
+planner-draft:
+	@PYTHONPATH=src uv run python scripts/plan-seed-family.py
+
+planner-openrouter:
+	@PYTHONPATH=src uv run python scripts/plan-seed-family.py --call-openrouter
+
+scenario-generate:
+	@PYTHONPATH=src uv run python scripts/generate-scenarios.py
+
 scenario-validate:
 	@PYTHONPATH=src uv run python scripts/run-campaign.py --validate-only
 
 campaign-run:
 	@PYTHONPATH=src uv run python scripts/run-campaign.py --freeze
+
+batch-metrics:
+	@PYTHONPATH=src uv run python scripts/report-metrics.py $(METRICS_ARGS)
+
+guarded-validate:
+	@PYTHONPATH=src uv run python scripts/run-guarded-eval.py --validate-only
+
+guarded-eval:
+	@PYTHONPATH=src uv run python scripts/run-guarded-eval.py $(GUARDED_ARGS)

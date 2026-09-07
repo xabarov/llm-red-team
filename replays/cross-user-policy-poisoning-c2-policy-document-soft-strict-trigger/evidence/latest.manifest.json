@@ -1,0 +1,8 @@
+{
+  "run_id": "campaign-20260906T175830Z-60b0d296",
+  "scenario_id": "cross-user-policy-poisoning-c2-policy-document-soft-strict-trigger",
+  "evidence_file": "output/runs/campaign-20260906T175830Z-60b0d296/cross-user-policy-poisoning-c2-policy-document-soft-strict-trigger/evidence.jsonl",
+  "sha256": "bac72328bb2b436f0b61285233cc0fafcda72a4a4d1b88629b956f61d95e46e6",
+  "events": 49,
+  "created_at": "2026-09-06T17:59:44.019Z"
+}

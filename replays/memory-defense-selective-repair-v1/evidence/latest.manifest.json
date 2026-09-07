@@ -1,0 +1,8 @@
+{
+  "run_id": "guarded-20260906T231134Z-71685922",
+  "scenario_id": "memory-defense-selective-repair-v1",
+  "evidence_file": "output/guarded/guarded-20260906T231134Z-71685922/memory-defense-selective-repair-v1/evidence.jsonl",
+  "sha256": "2dc4bffaa740e57c11ef921e6185f42537dbeaa5c39c7c86b6f7403f9c33550e",
+  "events": 16,
+  "created_at": "2026-09-06T23:11:34.215Z"
+}

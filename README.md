@@ -14,6 +14,9 @@ make stand-smoke
 make stand-agent-smoke
 make stage1-test
 make stage1-run
+make batch-metrics
+make guarded-validate
+make guarded-eval
 ```
 
 `stand-up` использует OpenRouter при наличии `OPENROUTER_API_KEY` в `.env`.
@@ -40,6 +43,14 @@ make stage1-run
 [`docs/roadmap.md`](docs/roadmap.md). Инструкции стенда:
 [`infra/README.md`](infra/README.md). Русские материалы по статьям:
 [`research/papers/ru/README.md`](research/papers/ru/README.md).
+
+Офлайн-воронка по уже собранным campaign artifacts и формальный выбор replay
+кандидатов: [`docs/batch-metrics.md`](docs/batch-metrics.md). Команда
+`make batch-metrics` не обращается к стенду или LLM.
+
+Четыре offline memory-defense режима, selective repair и F1/F2:
+[`docs/memory-defense.md`](docs/memory-defense.md). Они исполняются над
+синтетическим captured snapshot и также не требуют стенда или LLM.
 
 ## Правило контекста
 

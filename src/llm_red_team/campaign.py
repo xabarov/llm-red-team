@@ -22,6 +22,11 @@ from llm_red_team.target import StandTarget
 DEFAULT_SCENARIO = Path("replays/cross-user-policy-poisoning-v1/scenario.json")
 
 
+def default_validate_scenarios() -> list[Path]:
+    paths = sorted(Path("replays").glob("*/scenario.json"))
+    return paths or [DEFAULT_SCENARIO]
+
+
 @dataclass
 class ModeExecution:
     rendered: dict[str, Any]
@@ -385,7 +390,7 @@ def main() -> int:
     args = parser.parse_args()
 
     repo_root = Path.cwd()
-    scenario_paths = args.scenario or [DEFAULT_SCENARIO]
+    scenario_paths = args.scenario or (default_validate_scenarios() if args.validate_only else [DEFAULT_SCENARIO])
     scenarios = [load_scenario(path) for path in scenario_paths]
     if args.validate_only:
         for scenario, path in zip(scenarios, scenario_paths):
