@@ -1,7 +1,7 @@
 # Evaluation plan: g5-core-c1-c3-v1
 
 - Status: `proposed`
-- Plan SHA-256: `372208a3785a098b6ef71ff5be268883c8ac7eeae61ac521b3f5afbd6b27a2e5`
+- Plan SHA-256: `48efb639053a970f7565811d24fca423508c099696360c8653a7cfcc9e389c2c`
 - Live scenario runs / mode cells: `18` / `36`
 - Expected / maximum attempts: `84` / `108`
 - Expected / maximum LLM calls: `504` / `1836` (assumed)
@@ -59,3 +59,9 @@
 | `openai/gpt-5-mini` | C3 | `compaction-summary` | `cross-user-policy-poisoning-c3-compaction-neutral-summary` | `protected` | 2 | negative-control |
 | `openai/gpt-5-mini` | C3 | `compaction-summary` | `cross-user-policy-poisoning-c3-compaction-neutral-summary` | `vulnerable` | 3 | negative-control |
 | `openai/gpt-5-mini` | C3 | `compaction-summary` | `cross-user-policy-poisoning-c3-compaction-neutral-summary` | `protected` | 3 | negative-control |
+
+## Offline defense cells
+
+- Mode cells: `4`
+- Modes: `none, write, read, write+read`
+- Frozen case SHA-256: `6f81d8d25a4ff505bf1d43ae98b7ff0fe934d68e424eac256118b24ae09b4a20`

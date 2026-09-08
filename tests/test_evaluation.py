@@ -35,6 +35,11 @@ class EvaluationPlanTests(unittest.TestCase):
         self.assertEqual(first["live"]["totals"]["expected_llm_calls"], 504)
         self.assertEqual(first["live"]["totals"]["maximum_llm_calls"], 1836)
         self.assertEqual(first["live"]["totals"]["expected_duration_seconds"], 1472.19)
+        self.assertEqual(first["offline"]["mode_cells"], 4)
+        self.assertEqual(
+            {cell["defense_mode"] for cell in first["offline"]["cells"]},
+            {"none", "write", "read", "write+read"},
+        )
         self.assertEqual(first["live"]["telemetry_status"]["cost"], "estimated from pricing snapshot; not measured")
 
     def test_proposed_matrix_cannot_execute(self) -> None:

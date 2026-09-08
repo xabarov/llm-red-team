@@ -28,6 +28,8 @@ SHA-256 сценариев и calibration artifacts, модели, классы 
 
 Live dimensions: две модели × три сценария × два auth mode × три повтора = 36
 mode-cells, или 18 запусков сценария (один запуск выполняет оба auth mode).
+Отдельный offline track разворачивается ещё в четыре cells: `none`, `write`,
+`read`, `write+read` над одним frozen case. У этих cells нет model/auth dimension.
 
 Модели:
 

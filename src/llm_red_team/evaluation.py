@@ -238,6 +238,22 @@ def build_plan(matrix: dict[str, Any], *, repo_root: Path = Path(".")) -> dict[s
         "budget": live["budget"],
         "cells": cells,
     }
+    offline = matrix["offline"]
+    offline_plan = {
+        **offline,
+        "mode_cells": len(offline["modes"]) * offline["repeats"],
+        "cells": [
+            {
+                "cell_id": f"{offline['kind']}::{mode}::r{repeat}",
+                "case_path": offline["case_path"],
+                "case_sha256": offline["case_sha256"],
+                "defense_mode": mode,
+                "repeat_index": repeat,
+            }
+            for repeat in range(1, offline["repeats"] + 1)
+            for mode in offline["modes"]
+        ],
+    }
     plan = {
         "schema_version": "evaluation-plan/v1",
         "matrix_id": matrix["id"],
@@ -245,7 +261,7 @@ def build_plan(matrix: dict[str, Any], *, repo_root: Path = Path(".")) -> dict[s
         "matrix_status": matrix["status"],
         "stand_revision": matrix["stand_revision"],
         "live": live_plan,
-        "offline": matrix["offline"],
+        "offline": offline_plan,
     }
     plan["plan_sha256"] = canonical_hash(plan)
     return plan
@@ -580,5 +596,15 @@ def render_plan_markdown(plan: dict[str, Any]) -> str:
             f"| `{cell['model']}` | {cell['attack_class']} | `{cell['carrier']}` | `{cell['scenario_id']}` | "
             f"`{cell['auth_mode']}` | {cell['repeat_index']} | {cell['maturity']} |"
         )
-    lines.append("")
+    lines.extend(
+        [
+            "",
+            "## Offline defense cells",
+            "",
+            f"- Mode cells: `{plan['offline']['mode_cells']}`",
+            f"- Modes: `{', '.join(plan['offline']['modes'])}`",
+            f"- Frozen case SHA-256: `{plan['offline']['case_sha256']}`",
+            "",
+        ]
+    )
     return "\n".join(lines)
