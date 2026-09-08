@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import copy
 import json
+import shutil
 import tempfile
 import unittest
 from pathlib import Path
@@ -18,14 +19,15 @@ from llm_red_team.evaluation import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
+INPUT_PATH_MAP = json.loads((ROOT / "evaluation/input-path-map.json").read_text(encoding="utf-8"))
 
 
 class EvaluationPlanTests(unittest.TestCase):
     def test_core_plan_is_deterministic_and_budget_is_estimated(self) -> None:
         matrix = load_matrix(ROOT / "evaluation/matrix.yaml", schema_path=ROOT / "schemas/evaluation-matrix.schema.json")
-        verify_inputs(matrix, repo_root=ROOT)
-        first = build_plan(matrix, repo_root=ROOT)
-        second = build_plan(matrix, repo_root=ROOT)
+        verify_inputs(matrix, repo_root=ROOT, path_map=INPUT_PATH_MAP)
+        first = build_plan(matrix, repo_root=ROOT, path_map=INPUT_PATH_MAP)
+        second = build_plan(matrix, repo_root=ROOT, path_map=INPUT_PATH_MAP)
 
         self.assertEqual(first["plan_sha256"], second["plan_sha256"])
         self.assertEqual(first["live"]["scenario_runs"], 18)
@@ -44,7 +46,11 @@ class EvaluationPlanTests(unittest.TestCase):
 
     def test_proposed_matrix_cannot_execute(self) -> None:
         matrix = load_matrix(ROOT / "evaluation/matrix.yaml", schema_path=ROOT / "schemas/evaluation-matrix.schema.json")
-        plan = build_plan(matrix, repo_root=ROOT)
+        matrix = copy.deepcopy(matrix)
+        matrix["status"] = "proposed"
+        matrix["live"]["budget"]["approved"] = False
+        matrix["live"]["budget"]["hard_cap_usd"] = None
+        plan = build_plan(matrix, repo_root=ROOT, path_map=INPUT_PATH_MAP)
         with self.assertRaisesRegex(EvaluationError, "not approved"):
             assert_execution_approved(matrix, plan, plan["plan_sha256"])
 
@@ -54,7 +60,7 @@ class EvaluationPlanTests(unittest.TestCase):
         matrix["status"] = "approved"
         matrix["live"]["budget"]["approved"] = True
         matrix["live"]["budget"]["hard_cap_usd"] = 1.0
-        plan = build_plan(matrix, repo_root=ROOT)
+        plan = build_plan(matrix, repo_root=ROOT, path_map=INPUT_PATH_MAP)
         with self.assertRaisesRegex(EvaluationError, "exceeds hard cap"):
             assert_execution_approved(matrix, plan, plan["plan_sha256"])
 
@@ -62,7 +68,7 @@ class EvaluationPlanTests(unittest.TestCase):
         matrix = load_matrix(ROOT / "evaluation/matrix.yaml", schema_path=ROOT / "schemas/evaluation-matrix.schema.json")
         matrix["live"]["scenarios"][0]["sha256"] = "0" * 64
         with self.assertRaisesRegex(EvaluationError, "hash mismatch"):
-            verify_inputs(matrix, repo_root=ROOT)
+            verify_inputs(matrix, repo_root=ROOT, path_map=INPUT_PATH_MAP)
 
 
 class ReconstructionTests(unittest.TestCase):
@@ -172,6 +178,42 @@ class ReconstructionTests(unittest.TestCase):
             with self.assertRaisesRegex(EvaluationError, "escapes repository"):
                 build_reconstruction(manifest, repo_root=root)
 
+    def test_frozen_path_map_reconstructs_after_sources_move(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            manifest, _ = self._fixture(root)
+            frozen = root / "frozen"
+            shutil.copytree(root / "run", frozen / "run")
+            shutil.copy2(root / "scenario.json", frozen / "scenario.json")
+            path_map = {"scenario.json": "frozen/scenario.json"}
+            for name in ("summary_path", "evidence_path", "evidence_manifest_path"):
+                logical = manifest["artifacts"][0][name]
+                path_map[logical] = str(Path("frozen") / logical)
+            manifest["path_map"] = path_map
+            shutil.rmtree(root / "run")
+            (root / "scenario.json").unlink()
+
+            report = build_reconstruction(manifest, repo_root=root)
+
+            self.assertEqual(report["aggregate"]["cases"], 1)
+
+    def test_frozen_source_manifest_hash_is_verified(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            manifest, _ = self._fixture(root)
+            source = root / "source-manifest.json"
+            source.write_text("{}\n", encoding="utf-8")
+            manifest.update(
+                {
+                    "frozen_at": "2026-09-08T00:00:00+00:00",
+                    "source_manifest_path": "source-manifest.json",
+                    "source_manifest_sha256": "0" * 64,
+                    "path_map": {},
+                }
+            )
+            with self.assertRaisesRegex(EvaluationError, "source manifest hash mismatch"):
+                build_reconstruction(manifest, repo_root=root)
+
     def test_summarization_model_mismatch_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
@@ -179,6 +221,18 @@ class ReconstructionTests(unittest.TestCase):
             manifest["artifacts"][0]["summarization_model"] = "runtime:other"
             with self.assertRaisesRegex(EvaluationError, "summarization model mismatch"):
                 build_reconstruction(manifest, repo_root=root)
+
+    def test_live_manifest_dimension_metadata_is_bound_to_plan(self) -> None:
+        manifest = json.loads(
+            (
+                ROOT
+                / "evaluation/results/g5-20260908-full-v2/execution-manifest.json"
+            ).read_text(encoding="utf-8")
+        )
+        manifest["artifacts"][0]["attack_class"] = "C4"
+
+        with self.assertRaisesRegex(EvaluationError, "attack_class does not match matrix plan"):
+            build_reconstruction(manifest, repo_root=ROOT)
 
     def test_live_manifest_must_match_bound_matrix_plan(self) -> None:
         manifest = json.loads(
@@ -188,7 +242,7 @@ class ReconstructionTests(unittest.TestCase):
             ROOT / "evaluation/matrix.yaml",
             schema_path=ROOT / "schemas/evaluation-matrix.schema.json",
         )
-        plan = build_plan(matrix, repo_root=ROOT)
+        plan = build_plan(matrix, repo_root=ROOT, path_map=INPUT_PATH_MAP)
         manifest.update(
             {
                 "manifest_kind": "live-matrix",

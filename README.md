@@ -18,6 +18,7 @@ make batch-metrics
 make guarded-validate
 make guarded-eval
 make evaluation-plan
+make evaluation-freeze
 make evaluation-report
 make evaluation-review-prepare
 make evaluation-combined-report
@@ -57,7 +58,8 @@ make evaluation-combined-report
 синтетическим captured snapshot и также не требуют стенда или LLM.
 
 Ограниченная G5 matrix, бюджетный approval gate и восстановление агрегатов из
-evidence: [`docs/evaluation-matrix.md`](docs/evaluation-matrix.md).
+evidence: [`docs/evaluation-matrix.md`](docs/evaluation-matrix.md). Итоговый
+двухмодельный прогон: [`evaluation/results/g5-20260908-full-v2/README.md`](evaluation/results/g5-20260908-full-v2/README.md).
 
 ## Правило контекста
 

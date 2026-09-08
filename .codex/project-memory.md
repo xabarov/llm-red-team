@@ -24,7 +24,8 @@
 - G2 Seed Improvement завершён: seed-family расширен до 8 variants. Успешный C2 `cross-user-policy-poisoning-c2-policy-document-soft-strict-trigger` сохранён в replay corpus с PASS/PASS, run `campaign-20260906T175830Z-60b0d296`, evidence SHA-256 `bac72328bb2b436f0b61285233cc0fafcda72a4a4d1b88629b956f61d95e46e6`. C3 после двух wording-итераций зафиксирован как negative result в `docs/seed-improvement-g2.md`.
 - G3 Batch Metrics завершён: `make batch-metrics` офлайн читает case/batch summaries, пересчитывает cumulative funnel и MPSR/MESR/E2E gates, показывает attempts и telemetry coverage, проверяет integrity aggregates и выбирает replay candidates строгими правилами. На 21 сохранённом run (25 cases) расхождений batch summaries нет; generated C1 и C2 soft-strict-trigger выбраны `replay-ready`.
 - G4 Guarded Modes завершён как честный offline simulation layer над captured post-write snapshot: режимы `none/write/read/write+read`, provenance/authority write/read gates, selective repair и W1/W2/E1/F1/F2. Frozen replay `memory-defense-selective-repair-v1`, run `guarded-20260906T231134Z-71685922`, evidence SHA-256 `2dc4bffaa740e57c11ef921e6185f42537dbeaa5c39c7c86b6f7403f9c33550e`; none F1 FAIL/F2 PASS, три guarded modes F1/F2 PASS и SRSR=1.
-- G5 offline preparation готова: `evaluation/matrix.yaml` фиксирует C1/C2/C3 × vulnerable/protected × 3 repeats для `gpt-4.1-mini` и `gpt-5-mini`; planner даёт 36 cells, 84/108 expected/max attempts, `$1.27/$15.72` estimated/max-estimated cost и proposed cap `$20`. Runner требует approved status, cap и exact plan hash; reporter проверяет artifact/evidence hashes и строит Wilson-95 breakdown. Historical calibration reconstruction и combined G4 baseline сохранены в `evaluation/`; blinded review pipeline создаёт opaque packet, committed private-key mapping и требует третьего reviewer при расхождении.
+- G5 завершён: approved plan `6cd440c…fab7b` выполнил C1/C2/C3 × vulnerable/protected × 3 repeats для `gpt-4.1-mini` и `gpt-5-mini`. Session `g5-20260908-full-v2`: 18/18 artifacts, 36 cells, 84 attempts, 48 мин 8 с. Replay-ready C1/C2 дали E2E `8/12` в каждой ветке (vulnerable — внешнее чтение, protected — IAM-блокировка); C3 дал один vulnerable E2E из шести и считается weak negative control. Portable bundle: `evaluation/results/g5-20260908-full-v2/`, aggregate SHA-256 `8cd5581b…ef909`.
+- G5 provider cost/tokens не измерены: `$1.27/$15.72` остаются preflight estimates при approved cap `$20`. Blinded packet на 36 cells успешно строится, но независимые human verdicts не собраны (`not-collected`).
 - Poppler и Tesseract с моделями `eng`/`rus` установлены; pipeline выбирает текстовый слой PDF и использует OCR только для сканов.
 - Все три публикации прочитаны постранично и сверены визуально. Для каждой подготовлен отдельный русский разбор с картой страниц и применением к хакатону; машинные переводы удалены по решению команды.
 
@@ -41,13 +42,14 @@
 - Для MVP OpenRouter по умолчанию использует `openai/gpt-4.1-mini`: `gpt-5-mini` оставлен для матричных замеров, но 2026-09-06 нестабильно закреплял write-side факты как global policy на этом стенде.
 - Расширенные campaign-метрики пересчитываются из case-level conjunctions; `batch-summary.json` служит integrity check. Отсутствующие cost/latency observations остаются `n/a` с coverage, а не считаются нулевыми.
 - Memory-defense не смешивается с IAM auth modes: G4 работает над captured state и не заявляется как live защита upstream. Для реального E2E сравнения нужен interposition hook; provenance metadata должна поступать из доверенного канала.
+- Завершённые live evaluation bundles сохраняются в `evaluation/results/<session>/` с исходным manifest и logical `path_map`; рабочие/review-private файлы остаются в ignored `output/`.
 
 ## Блокеры
 
-- Для live части G5 нужно явно согласовать proposed matrix: `gpt-4.1-mini` + `gpt-5-mini`, 3 повтора, hard cap `$20`. До approval runner гарантированно отказывает до обращения к стенду/провайдеру.
+- Для G6 внешних блокеров нет. Human stealth review потребует двух независимых рецензентов и третьего при расхождении; до этого метрика остаётся `not-collected`.
 
 ## Ближайшие шаги
 
-1. Получить approval на модели, 3 повтора и hard cap `$20`; после этого выполнить live G5 matrix по exact plan hash.
-2. Пересчитать final evidence-linked report и провести blinded manual review по `evaluation/judge-rubric.yaml`.
-3. Не смешивать offline defense с live IAM; необходимость live defense interposition решить отдельно.
+1. Завести HACK-задачу на G6 и собрать demo/submission narrative из frozen G5 report.
+2. Подготовить основной replay и запасной prerecorded trace без нового платного прогона.
+3. При наличии двух независимых рецензентов провести blinded review по `evaluation/judge-rubric.yaml`; не блокировать техническое завершение G5 отсутствующей человеческой разметкой.

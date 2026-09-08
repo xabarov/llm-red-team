@@ -22,6 +22,8 @@ from llm_red_team.evaluation import (
     build_plan,
     file_hash,
     load_matrix,
+    load_path_map,
+    mapped_repo_path,
     render_plan_markdown,
     verify_inputs,
 )
@@ -76,6 +78,12 @@ def main() -> int:
         description="Dry-run by default. Live OpenRouter execution requires matrix approval and an exact plan hash."
     )
     parser.add_argument("--matrix", type=Path, default=Path("evaluation/matrix.yaml"))
+    parser.add_argument(
+        "--path-map",
+        type=Path,
+        default=Path("evaluation/input-path-map.json"),
+        help="logical-to-archived input paths; does not alter matrix content or plan hash",
+    )
     parser.add_argument("--execute", action="store_true")
     parser.add_argument("--approve-plan-sha256", default="")
     parser.add_argument("--session-id", default=None)
@@ -83,8 +91,9 @@ def main() -> int:
     repo_root = Path.cwd()
     try:
         matrix = load_matrix(args.matrix)
-        verify_inputs(matrix, repo_root=repo_root)
-        plan = build_plan(matrix, repo_root=repo_root)
+        path_map = load_path_map(args.path_map)
+        verify_inputs(matrix, repo_root=repo_root, path_map=path_map)
+        plan = build_plan(matrix, repo_root=repo_root, path_map=path_map)
         if not args.execute:
             print(render_plan_markdown(plan), end="")
             print("Dry-run only. No stand or provider calls were made.")
@@ -124,12 +133,20 @@ def main() -> int:
             for scenario in matrix["live"]["scenarios"]
             for repeat in range(1, matrix["live"]["repeats"] + 1)
         ],
+        "path_map": path_map,
         "artifacts": [],
     }
     manifest_path = session_dir / "execution-manifest.json"
     _write_manifest(manifest_path, manifest)
     scenarios = matrix["live"]["scenarios"]
-    scenario_args = [item for scenario in scenarios for item in ("--scenario", scenario["path"])]
+    scenario_args = [
+        item
+        for scenario in scenarios
+        for item in (
+            "--scenario",
+            str(mapped_repo_path(repo_root, scenario["path"], path_map).relative_to(repo_root)),
+        )
+    ]
     had_failed_gate = False
     started = time.monotonic()
     wall_limit = matrix["live"]["budget"]["maximum_wall_time_seconds"]

@@ -1,0 +1,8 @@
+{
+  "run_id": "g5-20260908-full-v2-openai-gpt-5-mini-r3",
+  "scenario_id": "cross-user-policy-poisoning-c3-compaction-neutral-summary",
+  "evidence_file": "output/runs/g5-20260908-full-v2-openai-gpt-5-mini-r3/cross-user-policy-poisoning-c3-compaction-neutral-summary/evidence.jsonl",
+  "sha256": "cf7b1cb6f0beac8ea99e8c59941f3572e3d0f546e4fe89bbfbc96393e1c63cf1",
+  "events": 73,
+  "created_at": "2026-09-08T19:21:39.180Z"
+}

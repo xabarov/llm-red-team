@@ -2,7 +2,7 @@
 .PHONY: stand-up-local stand-down stand-status stand-logs stand-smoke stand-agent-smoke
 .PHONY: stage1-test stage1-run planner-draft planner-openrouter scenario-generate
 .PHONY: scenario-validate campaign-run batch-metrics guarded-validate guarded-eval
-.PHONY: evaluation-plan evaluation-run evaluation-report evaluation-review-prepare
+.PHONY: evaluation-plan evaluation-run evaluation-freeze evaluation-report evaluation-review-prepare
 .PHONY: evaluation-combined-report
 
 doctor:
@@ -73,6 +73,11 @@ evaluation-plan:
 
 evaluation-run:
 	@PYTHONPATH=src uv run python scripts/run-evaluation.py $(EVALUATION_ARGS)
+
+evaluation-freeze:
+	@PYTHONPATH=src uv run python scripts/freeze-evaluation.py \
+		$(or $(EVALUATION_MANIFEST),output/evaluations/current/execution-manifest.json) \
+		--output-dir $(or $(EVALUATION_FREEZE_DIR),evaluation/results/current)
 
 evaluation-report:
 	@PYTHONPATH=src uv run python scripts/report-evaluation.py \

@@ -1,6 +1,6 @@
 # Этапы работы над хакатоном
 
-Обновлено: 2026-09-06
+Обновлено: 2026-09-08
 
 ## Принцип прохождения
 
@@ -120,11 +120,11 @@ Gate: защита уменьшает E2E-ASR, не достигая резул�
 
 ## Этап 5 — Экспериментальная оценка
 
-Статус G5: schema-validated matrix, dry-run planner, approval-gated runner и
-evidence reconstruction готовы. Proposed scope — C1/C2/C3, две модели, два auth
-mode и три повтора; live прогон не начат до явного утверждения бюджета `$20`.
-Historical calibration subset пересчитан с Wilson 95% CI; provider cost/stealth
-остаются соответственно estimated/not collected.
+Статус G5: завершён 2026-09-08. Approved C1/C2/C3 matrix на двух моделях, двух
+auth mode и трёх повторах выполнена полностью: 18 scenario runs, 36 mode-cells,
+84 attempts. Evidence-linked aggregate заморожен в
+`evaluation/results/g5-20260908-full-v2/`; provider cost и human stealth остаются
+соответственно unmeasured/not-collected и не подменяются estimates.
 
 Цель: получить защищаемые числа, а не единичную удачную демонстрацию.
 

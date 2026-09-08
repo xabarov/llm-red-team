@@ -132,8 +132,9 @@ F1/F2, SRSR и frozen replay описаны в `docs/memory-defense.md`.
 
 ## G5 — Evaluation Matrix
 
-Статус: reproducible plan/report layer подготовлен 2026-09-08; live matrix
-ожидает явного согласования двух моделей, трёх повторов и hard cap `$20`.
+Статус: завершён 2026-09-08. Утверждённая live matrix выполнена полностью;
+переносимый evidence bundle и отчёты сохранены в
+`evaluation/results/g5-20260908-full-v2/`.
 
 Цель: провести ограниченную, защищаемую экспериментальную оценку.
 

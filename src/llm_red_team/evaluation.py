@@ -40,6 +40,25 @@ def repo_path(repo_root: Path, relative: str) -> Path:
     return resolved
 
 
+def mapped_repo_path(
+    repo_root: Path,
+    relative: str,
+    path_map: dict[str, str] | None = None,
+) -> Path:
+    """Resolve a logical repository path, optionally through a frozen-artifact map."""
+    repo_path(repo_root, relative)  # Validate the logical path even when it is remapped.
+    mapped = (path_map or {}).get(relative, relative)
+    return repo_path(repo_root, mapped)
+
+
+def load_path_map(path: Path) -> dict[str, str]:
+    """Load a repository path-alias map used for immutable archived inputs."""
+    value = _read_object(path)
+    if not all(isinstance(key, str) and isinstance(target, str) for key, target in value.items()):
+        raise EvaluationError(f"path map must contain only string pairs: {path}")
+    return value
+
+
 def _read_object(path: Path) -> dict[str, Any]:
     try:
         if path.suffix in {".yaml", ".yml"}:
@@ -75,9 +94,14 @@ def load_matrix(path: Path, *, schema_path: Path = Path("schemas/evaluation-matr
     return matrix
 
 
-def verify_inputs(matrix: dict[str, Any], *, repo_root: Path) -> None:
+def verify_inputs(
+    matrix: dict[str, Any],
+    *,
+    repo_root: Path,
+    path_map: dict[str, str] | None = None,
+) -> None:
     expected_revision = matrix["stand_revision"]
-    lock = repo_path(repo_root, "infra/stand.lock").read_text(encoding="utf-8")
+    lock = mapped_repo_path(repo_root, "infra/stand.lock", path_map).read_text(encoding="utf-8")
     if f"STAND_REVISION={expected_revision}" not in lock and f'STAND_REVISION="{expected_revision}"' not in lock:
         raise EvaluationError("matrix stand_revision differs from infra/stand.lock")
     inputs = [
@@ -96,19 +120,24 @@ def verify_inputs(matrix: dict[str, Any], *, repo_root: Path) -> None:
             ]
         )
     for relative, expected in inputs:
-        path = repo_path(repo_root, relative)
+        path = mapped_repo_path(repo_root, relative, path_map)
         if not path.is_file():
             raise EvaluationError(f"matrix input is missing: {relative}")
         actual = file_hash(path)
         if actual != expected:
             raise EvaluationError(f"matrix input hash mismatch: {relative}; expected {expected}, found {actual}")
     for scenario in matrix["live"]["scenarios"]:
-        _verify_calibration(scenario, repo_root=repo_root)
+        _verify_calibration(scenario, repo_root=repo_root, path_map=path_map)
 
 
-def _verify_calibration(scenario: dict[str, Any], *, repo_root: Path) -> None:
+def _verify_calibration(
+    scenario: dict[str, Any],
+    *,
+    repo_root: Path,
+    path_map: dict[str, str] | None = None,
+) -> None:
     calibration = scenario["calibration"]
-    summary = _read_object(repo_path(repo_root, calibration["summary_path"]))
+    summary = _read_object(mapped_repo_path(repo_root, calibration["summary_path"], path_map))
     if summary.get("scenario_id") != scenario["id"]:
         raise EvaluationError(f"calibration scenario mismatch: {calibration['summary_path']}")
     modes = summary.get("modes", {})
@@ -125,7 +154,9 @@ def _verify_calibration(scenario: dict[str, Any], *, repo_root: Path) -> None:
         raise EvaluationError(f"expected attempts by mode do not match calibration: {scenario['id']}")
     events = []
     try:
-        with repo_path(repo_root, calibration["evidence_path"]).open(encoding="utf-8") as stream:
+        with mapped_repo_path(repo_root, calibration["evidence_path"], path_map).open(
+            encoding="utf-8"
+        ) as stream:
             events = [json.loads(line) for line in stream if line.strip()]
     except json.JSONDecodeError as exc:
         raise EvaluationError(f"invalid calibration evidence: {calibration['evidence_path']}") from exc
@@ -146,7 +177,12 @@ def _cost(model: dict[str, Any], calls: int, input_tokens: int, output_tokens: i
     return calls * per_call
 
 
-def build_plan(matrix: dict[str, Any], *, repo_root: Path = Path(".")) -> dict[str, Any]:
+def build_plan(
+    matrix: dict[str, Any],
+    *,
+    repo_root: Path = Path("."),
+    path_map: dict[str, str] | None = None,
+) -> dict[str, Any]:
     live = matrix["live"]
     assumptions = live["assumptions"]
     cells: list[dict[str, Any]] = []
@@ -156,7 +192,9 @@ def build_plan(matrix: dict[str, Any], *, repo_root: Path = Path(".")) -> dict[s
         maximum_attempts = 0
         expected_duration = 0.0
         for scenario in live["scenarios"]:
-            maximum_per_mode = _scenario_max_attempts(repo_path(repo_root, scenario["path"]))
+            maximum_per_mode = _scenario_max_attempts(
+                mapped_repo_path(repo_root, scenario["path"], path_map)
+            )
             for repeat in range(1, live["repeats"] + 1):
                 for mode in live["modes"]:
                     cell = {
@@ -299,20 +337,34 @@ def build_reconstruction(manifest: dict[str, Any], *, repo_root: Path) -> dict[s
     except jsonschema.ValidationError as exc:
         location = ".".join(str(item) for item in exc.absolute_path) or "$"
         raise EvaluationError(f"invalid execution manifest at {location}: {exc.message}") from exc
+    path_map = manifest.get("path_map", {})
+    for logical, frozen in path_map.items():
+        repo_path(repo_root, logical)
+        repo_path(repo_root, frozen)
+    source_manifest_path = manifest.get("source_manifest_path")
+    if source_manifest_path:
+        source_path = repo_path(repo_root, source_manifest_path)
+        if file_hash(source_path) != manifest["source_manifest_sha256"]:
+            raise EvaluationError(f"source manifest hash mismatch: {source_manifest_path}")
+    planned_metadata: dict[tuple[str, str, int], dict[str, Any]] = {}
     if manifest["manifest_kind"] == "live-matrix":
-        matrix_path = repo_path(repo_root, manifest["matrix_path"])
+        matrix_path = mapped_repo_path(repo_root, manifest["matrix_path"], path_map)
         if file_hash(matrix_path) != manifest["matrix_file_sha256"]:
             raise EvaluationError(f"matrix file hash mismatch: {manifest['matrix_path']}")
         matrix = load_matrix(
             matrix_path,
             schema_path=Path(__file__).resolve().parents[2] / "schemas/evaluation-matrix.schema.json",
         )
-        verify_inputs(matrix, repo_root=repo_root)
-        rebuilt_plan = build_plan(matrix, repo_root=repo_root)
+        verify_inputs(matrix, repo_root=repo_root, path_map=path_map)
+        rebuilt_plan = build_plan(matrix, repo_root=repo_root, path_map=path_map)
         if rebuilt_plan["matrix_sha256"] != manifest["matrix_content_sha256"]:
             raise EvaluationError("execution manifest matrix content hash mismatch")
         if rebuilt_plan["plan_sha256"] != manifest["plan_sha256"]:
             raise EvaluationError("execution manifest does not match its matrix plan")
+        if rebuilt_plan["matrix_id"] != manifest["matrix_id"]:
+            raise EvaluationError("execution manifest matrix id mismatch")
+        if rebuilt_plan["stand_revision"] != manifest["stand_revision"]:
+            raise EvaluationError("execution manifest stand revision mismatch")
         planned_artifacts = {
             (cell["model"], cell["scenario_id"], cell["repeat_index"])
             for cell in rebuilt_plan["live"]["cells"]
@@ -323,6 +375,17 @@ def build_reconstruction(manifest: dict[str, Any], *, repo_root: Path) -> dict[s
         }
         if planned_artifacts != declared_artifacts:
             raise EvaluationError("expected artifacts do not match the bound matrix plan")
+        for cell in rebuilt_plan["live"]["cells"]:
+            key = (cell["model"], cell["scenario_id"], cell["repeat_index"])
+            planned_metadata[key] = {
+                "scenario_path": cell["scenario_path"],
+                "scenario_sha256": cell["scenario_sha256"],
+                "attack_class": cell["attack_class"],
+                "carrier": cell["carrier"],
+                "maturity": cell["maturity"],
+                "research_model": cell["runtime_model"],
+                "summarization_model": cell["runtime_model"],
+            }
     cases: list[dict[str, Any]] = []
     sources: list[dict[str, Any]] = []
     seen: set[tuple[str, str, int]] = set()
@@ -335,12 +398,17 @@ def build_reconstruction(manifest: dict[str, Any], *, repo_root: Path) -> dict[s
         if key in seen:
             raise EvaluationError(f"duplicate execution artifact: {key}")
         seen.add(key)
+        for field, expected in planned_metadata.get(key, {}).items():
+            if artifact.get(field) != expected:
+                raise EvaluationError(
+                    f"artifact {field} does not match matrix plan: {key}"
+                )
         checked: dict[str, str] = {}
-        scenario_path = repo_path(repo_root, artifact["scenario_path"])
+        scenario_path = mapped_repo_path(repo_root, artifact["scenario_path"], path_map)
         if not scenario_path.is_file() or file_hash(scenario_path) != artifact["scenario_sha256"]:
             raise EvaluationError(f"scenario hash mismatch: {artifact['scenario_path']}")
         for name in ("summary", "evidence", "evidence_manifest"):
-            path = repo_path(repo_root, artifact[f"{name}_path"])
+            path = mapped_repo_path(repo_root, artifact[f"{name}_path"], path_map)
             expected_hash = artifact[f"{name}_sha256"]
             if not path.is_file():
                 raise EvaluationError(f"missing {name}: {path}")
@@ -348,13 +416,15 @@ def build_reconstruction(manifest: dict[str, Any], *, repo_root: Path) -> dict[s
             if actual != expected_hash:
                 raise EvaluationError(f"{name} hash mismatch: {path}")
             checked[name] = actual
-        summary_path = repo_path(repo_root, artifact["summary_path"])
+        summary_path = mapped_repo_path(repo_root, artifact["summary_path"], path_map)
         summary = _read_object(summary_path)
         if summary.get("scenario_id") != artifact["scenario_id"]:
             raise EvaluationError(f"scenario id mismatch in {summary_path}")
         if summary.get("run_id") != artifact["run_id"]:
             raise EvaluationError(f"run id mismatch in {summary_path}")
-        evidence_manifest = _read_object(repo_path(repo_root, artifact["evidence_manifest_path"]))
+        evidence_manifest = _read_object(
+            mapped_repo_path(repo_root, artifact["evidence_manifest_path"], path_map)
+        )
         if evidence_manifest.get("sha256") != checked["evidence"]:
             raise EvaluationError(f"evidence manifest does not bind evidence: {artifact['evidence_manifest_path']}")
         if evidence_manifest.get("run_id") != artifact["run_id"]:
@@ -366,7 +436,9 @@ def build_reconstruction(manifest: dict[str, Any], *, repo_root: Path) -> dict[s
         event_count = 0
         mode_timestamps: dict[str, list[datetime]] = {}
         try:
-            with repo_path(repo_root, artifact["evidence_path"]).open(encoding="utf-8") as stream:
+            with mapped_repo_path(repo_root, artifact["evidence_path"], path_map).open(
+                encoding="utf-8"
+            ) as stream:
                 for line_number, line in enumerate(stream, 1):
                     if not line.strip():
                         continue

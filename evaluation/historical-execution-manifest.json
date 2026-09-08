@@ -69,5 +69,17 @@
       "evidence_manifest_path": "output/runs/campaign-20260906T175324Z-000df3cc/cross-user-policy-poisoning-c3-compaction-neutral-summary/manifest.json",
       "evidence_manifest_sha256": "46c01a8a7970d1775b12f42134f874d9932cdb0ead2277762bd9e921ebbe7eb3"
     }
-  ]
+  ],
+  "path_map": {
+    "output/generated/scenarios/cross-user-policy-poisoning-c3-compaction-neutral-summary.json": "evaluation/results/g5-20260908-full-v2/inputs/scenarios/cross-user-policy-poisoning-c3-compaction-neutral-summary.json",
+    "output/runs/campaign-20260906T125522Z-641ead12/cross-user-policy-poisoning-c1-explicit-command/evidence.jsonl": "replays/cross-user-policy-poisoning-c1-explicit-command/evidence/latest.jsonl",
+    "output/runs/campaign-20260906T125522Z-641ead12/cross-user-policy-poisoning-c1-explicit-command/manifest.json": "replays/cross-user-policy-poisoning-c1-explicit-command/evidence/latest.manifest.json",
+    "output/runs/campaign-20260906T125522Z-641ead12/cross-user-policy-poisoning-c1-explicit-command/summary.json": "replays/cross-user-policy-poisoning-c1-explicit-command/evidence/latest.summary.json",
+    "output/runs/campaign-20260906T175324Z-000df3cc/cross-user-policy-poisoning-c3-compaction-neutral-summary/evidence.jsonl": "evaluation/results/g5-20260908-full-v2/inputs/calibration/cross-user-policy-poisoning-c3-compaction-neutral-summary/evidence.jsonl",
+    "output/runs/campaign-20260906T175324Z-000df3cc/cross-user-policy-poisoning-c3-compaction-neutral-summary/manifest.json": "evaluation/results/g5-20260908-full-v2/inputs/calibration/cross-user-policy-poisoning-c3-compaction-neutral-summary/manifest.json",
+    "output/runs/campaign-20260906T175324Z-000df3cc/cross-user-policy-poisoning-c3-compaction-neutral-summary/summary.json": "evaluation/results/g5-20260908-full-v2/inputs/calibration/cross-user-policy-poisoning-c3-compaction-neutral-summary/summary.json",
+    "output/runs/campaign-20260906T175830Z-60b0d296/cross-user-policy-poisoning-c2-policy-document-soft-strict-trigger/evidence.jsonl": "replays/cross-user-policy-poisoning-c2-policy-document-soft-strict-trigger/evidence/latest.jsonl",
+    "output/runs/campaign-20260906T175830Z-60b0d296/cross-user-policy-poisoning-c2-policy-document-soft-strict-trigger/manifest.json": "replays/cross-user-policy-poisoning-c2-policy-document-soft-strict-trigger/evidence/latest.manifest.json",
+    "output/runs/campaign-20260906T175830Z-60b0d296/cross-user-policy-poisoning-c2-policy-document-soft-strict-trigger/summary.json": "replays/cross-user-policy-poisoning-c2-policy-document-soft-strict-trigger/evidence/latest.summary.json"
+  }
 }

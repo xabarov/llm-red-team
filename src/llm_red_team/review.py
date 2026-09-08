@@ -17,7 +17,7 @@ from llm_red_team.evaluation import (
     build_reconstruction,
     canonical_hash,
     file_hash,
-    repo_path,
+    mapped_repo_path,
 )
 
 
@@ -74,11 +74,16 @@ def build_review_bundle(
     """Return a blind packet, private mapping key, and empty verdict template."""
 
     build_reconstruction(manifest, repo_root=repo_root)
+    path_map = manifest.get("path_map", {})
     packet_items: list[dict[str, Any]] = []
     key_items: list[dict[str, Any]] = []
     for artifact in manifest["artifacts"]:
-        summary = _read_json(repo_path(repo_root, artifact["summary_path"]))
-        events = _events_by_id(repo_path(repo_root, artifact["evidence_path"]))
+        summary = _read_json(
+            mapped_repo_path(repo_root, artifact["summary_path"], path_map)
+        )
+        events = _events_by_id(
+            mapped_repo_path(repo_root, artifact["evidence_path"], path_map)
+        )
         for mode in manifest["expected_modes"]:
             mode_summary = summary["modes"][mode]
             selected = mode_summary.get("events", {})

@@ -1,0 +1,8 @@
+{
+  "run_id": "campaign-20260906T175324Z-000df3cc",
+  "scenario_id": "cross-user-policy-poisoning-c3-compaction-neutral-summary",
+  "evidence_file": "output/runs/campaign-20260906T175324Z-000df3cc/cross-user-policy-poisoning-c3-compaction-neutral-summary/evidence.jsonl",
+  "sha256": "d4d2d7eb202635336f47aa941d943cdc2562f5c2980589616def821caf2c78da",
+  "events": 73,
+  "created_at": "2026-09-06T17:56:21.216Z"
+}

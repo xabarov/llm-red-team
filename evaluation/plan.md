@@ -1,13 +1,13 @@
 # Evaluation plan: g5-core-c1-c3-v1
 
-- Status: `proposed`
-- Plan SHA-256: `48efb639053a970f7565811d24fca423508c099696360c8653a7cfcc9e389c2c`
+- Status: `approved`
+- Plan SHA-256: `6cd440c66709eddc9ba607e4ef93e9d71809cfaf1ee5a5e5c6253056503fab7b`
 - Live scenario runs / mode cells: `18` / `36`
 - Expected / maximum attempts: `84` / `108`
 - Expected / maximum LLM calls: `504` / `1836` (assumed)
 - Historical-duration extrapolation: `1472.2s` (stand restarts excluded)
 - Estimated / maximum estimated cost: `$1.27` / `$15.72`
-- Budget: `not approved`; hard cap: `n/a`; proposed cap: `$20.00`
+- Budget: `approved`; hard cap: `20.0`; proposed cap: `$20.00`
 - Maximum live wall time: `7200s`
 - Cost and call counts are estimates; existing evidence has no provider token/cost telemetry.
 - Offline memory-defense is a separate track and is not a live auth-mode comparison.

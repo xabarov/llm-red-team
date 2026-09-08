@@ -18,6 +18,14 @@
     "started_at": {"type": "string", "format": "date-time"},
     "completed_at": {"type": "string", "format": "date-time"},
     "result": {"enum": ["completed", "completed-with-failed-gates"]},
+    "frozen_at": {"type": "string", "format": "date-time"},
+    "source_manifest_path": {"type": "string", "minLength": 1},
+    "source_manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "path_map": {
+      "type": "object",
+      "propertyNames": {"minLength": 1},
+      "additionalProperties": {"type": "string", "minLength": 1}
+    },
     "expected_modes": {
       "type": "array",
       "items": {"enum": ["vulnerable", "protected"]},
@@ -80,6 +88,14 @@
     {
       "if": {"properties": {"manifest_kind": {"const": "live-matrix"}}},
       "then": {"required": ["matrix_path", "matrix_file_sha256", "matrix_content_sha256"]}
+    },
+    {
+      "if": {"required": ["source_manifest_path"]},
+      "then": {"required": ["source_manifest_sha256", "frozen_at", "path_map"]}
+    },
+    {
+      "if": {"required": ["source_manifest_sha256"]},
+      "then": {"required": ["source_manifest_path"]}
     }
   ]
 }

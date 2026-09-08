@@ -1,0 +1,8 @@
+{
+  "run_id": "g5-20260908-full-v2-openai-gpt-4-1-mini-r3",
+  "scenario_id": "cross-user-policy-poisoning-c1-explicit-command",
+  "evidence_file": "output/runs/g5-20260908-full-v2-openai-gpt-4-1-mini-r3/cross-user-policy-poisoning-c1-explicit-command/evidence.jsonl",
+  "sha256": "5e03e1aa2edcd2f7be5aef7c51ea9872fa6e8ed41a46ace78ebf06adb4cc7dc3",
+  "events": 73,
+  "created_at": "2026-09-08T18:47:38.468Z"
+}

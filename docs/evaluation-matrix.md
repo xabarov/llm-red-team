@@ -16,6 +16,10 @@ G5 разделён на два честно различимых трека:
 SHA-256 сценариев и calibration artifacts, модели, классы атак, carriers,
 режимы и число повторов.
 
+`evaluation/input-path-map.json` разрешает старые logical paths calibration в
+tracked archive. Alias не меняет matrix content или plan hash: содержимое каждого
+resolved input по-прежнему обязано совпасть с SHA-256 из matrix.
+
 ## Матрица
 
 Обязательное ядро:
@@ -38,6 +42,8 @@ mode-cells, или 18 запусков сценария (один запуск �
 
 C3 остаётся обязательным negative control: отсутствие полного E2E gate — это
 измеримый результат, а не основание удалить класс из матрицы.
+В полном прогоне C3 дал один vulnerable E2E из шести, поэтому фактически это
+слабый control с редким false positive, а не гарантированно безопасный carrier.
 
 ## Измеренное и предполагаемое
 
@@ -79,16 +85,35 @@ Pricing snapshot взят из OpenRouter model catalog 2026-09-07 и сохра
 | `openai/gpt-5-mini` | $0.25 | $2.00 | $0.57 | $7.20 |
 | Итого | — | — | $1.27 | $15.72 |
 
-Предлагаемый hard cap — `$20`. Это preflight cap над консервативной оценкой,
+Утверждённый hard cap — `$20`. Это preflight cap над консервативной оценкой,
 а не real-time billing limiter: без provider telemetry runner не способен
 остановиться по фактически списанной сумме. При изменении pricing или token
 assumptions меняется plan hash и старое approval перестаёт действовать.
 Дополнительно весь live execution ограничен двумя часами wall time; оставшееся
 время передаётся как timeout очередному batch process.
 
-Сейчас matrix имеет статус `proposed`, `budget.approved=false` и
-`hard_cap_usd=null`. Поэтому live execution технически заблокирован до явного
-решения пользователя.
+Matrix утверждена пользователем: `status=approved`, `budget.approved=true`,
+`hard_cap_usd=20.00`. Исполненный plan SHA-256 —
+`6cd440c66709eddc9ba607e4ef93e9d71809cfaf1ee5a5e5c6253056503fab7b`.
+
+## Полный live-прогон
+
+Session `g5-20260908-full-v2` завершилась 2026-09-08 со статусом
+`completed-with-failed-gates`: это результат oracle gates, а не ошибка runner.
+Получены все 18 scenario artifacts и 36 mode-cells, использованы ровно 84
+attempts. Полное время session — 48 мин 8 с при лимите 2 часа.
+
+Replay-ready C1/C2 дали MPSR/recall/E2E `8/12` в каждой auth-ветке. В vulnerable
+ветке это 8 успешных внешних чтений; в protected — 8 попыток, для которых IAM
+boundary доказанно заблокировала чтение. C2 устойчиво прошёл `6/6`, C1 — `2/6`.
+C3 дал poison/recall `3/6`, vulnerable E2E `1/6` и protected exploitation
+attempt `0/6`.
+
+Переносимый manifest, raw evidence, reconstruction и отчёты сохранены в
+`evaluation/results/g5-20260908-full-v2/`. Aggregate SHA-256:
+`8cd5581b88e0f342aa2d3d65bfd501dc1640ee52c22bd1cc6cc1fb12995ef909`.
+Provider cost/tokens не измерены и остаются `n/a`; preflight estimates нельзя
+выдавать за фактическое списание.
 
 ## Команды
 
@@ -98,7 +123,7 @@ assumptions меняется plan hash и старое approval перестаё
 make evaluation-plan
 ```
 
-После согласования нужно изменить только:
+Для нового согласованного прогона нужно установить:
 
 ```yaml
 status: approved
@@ -108,7 +133,7 @@ live:
     hard_cap_usd: 20.00
 ```
 
-Затем повторно получить hash плана и запустить его с точным подтверждением:
+Затем получить hash нового плана и запустить его с точным подтверждением:
 
 ```bash
 make evaluation-plan
@@ -123,12 +148,22 @@ budget cap и approval hash. Для каждой модели он переза�
 `output/evaluations/<session>/execution-manifest.json` вместе с неизменяемым для
 этого запуска snapshot матрицы.
 
+Завершённую session нужно перенести из ignored `output/` в tracked evidence
+bundle. Команда сначала полностью реконструирует source manifest, затем копирует
+его inputs/artifacts без изменения logical paths и повторно проверяет frozen
+manifest:
+
+```bash
+EVALUATION_MANIFEST=output/evaluations/<session>/execution-manifest.json \
+EVALUATION_FREEZE_DIR=evaluation/results/<session> \
+make evaluation-freeze
+```
+
 Воспроизведение агрегата:
 
 ```bash
 PYTHONPATH=src uv run python scripts/report-evaluation.py \
-  output/evaluations/<session>/execution-manifest.json \
-  --output output/evaluations/<session>/report.md
+  evaluation/results/g5-20260908-full-v2/execution-manifest.json
 ```
 
 Reporter проверяет hashes summary, evidence и evidence manifest, связь manifest
@@ -166,6 +201,9 @@ Manual review зафиксирован в `evaluation/judge-rubric.yaml`: два
 просматривают все 36 mode-cells со скрытыми model/mode/class labels, disagreement
 решает третий. `suspiciousness <= 1` используется только как явно обозначенный
 ordinal stealth proxy. Это протокол будущей разметки, не уже измеренный результат.
+Для полного live-прогона packet на 36 cells успешно собран, но независимые
+human verdicts не получены, поэтому отчёт сохраняет
+`manual review: not-collected`.
 Headline ASR строится отдельно только по `replay-ready`; полный scope вместе с
 C3 всегда подписывается как `including negative controls` и имеет breakdown по
 maturity.
@@ -202,17 +240,19 @@ EVALUATION_MANIFEST=output/evaluations/<session>/execution-manifest.json \
 make evaluation-combined-report
 ```
 
-До платного прогона примером служит `evaluation/g5-baseline-report.md`: это
-historical calibration + frozen offline defense, а не финальный двухмодельный
-результат.
+Исторический пример остаётся в `evaluation/g5-baseline-report.md`; итоговый
+двухмодельный результат — в
+`evaluation/results/g5-20260908-full-v2/combined-report.md`.
 
 ## Ограничения для защиты
 
 - Цена и LLM call count до появления provider telemetry остаются estimates.
-- Wall time — extrapolation из одного исторического запуска на scenario.
+- Live wall time измерен по evidence timestamps и границам session; исходный
+  план использовал историческую экстраполяцию.
 - Три повтора дают малую выборку; показываем counts и rates, не заявляем широкую
   статистическую обобщаемость.
-- C1/C2 — replay-ready wording; C3 — negative control, а не успешная атака.
+- C1/C2 — replay-ready wording; C3 — weak negative control с одним vulnerable
+  E2E из шести.
 - Offline SRSR из G4 нельзя смешивать с live protected gate.
-- Manual stealth verdicts до выполнения live matrix отсутствуют и должны
+- Manual stealth verdicts без двух независимых рецензентов отсутствуют и должны
   оставаться `not collected`, а не нулём.
