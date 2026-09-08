@@ -120,6 +120,12 @@ Gate: защита уменьшает E2E-ASR, не достигая резул�
 
 ## Этап 5 — Экспериментальная оценка
 
+Статус G5: schema-validated matrix, dry-run planner, approval-gated runner и
+evidence reconstruction готовы. Proposed scope — C1/C2/C3, две модели, два auth
+mode и три повтора; live прогон не начат до явного утверждения бюджета `$20`.
+Historical calibration subset пересчитан с Wilson 95% CI; provider cost/stealth
+остаются соответственно estimated/not collected.
+
 Цель: получить защищаемые числа, а не единичную удачную демонстрацию.
 
 Результаты:

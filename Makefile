@@ -1,4 +1,4 @@
-.PHONY: doctor context-check stand-bootstrap stand-up stand-up-openrouter stand-up-local stand-down stand-status stand-logs stand-smoke stand-agent-smoke stage1-test stage1-run planner-draft planner-openrouter scenario-generate scenario-validate campaign-run batch-metrics guarded-validate guarded-eval
+.PHONY: doctor context-check stand-bootstrap stand-up stand-up-openrouter stand-up-local stand-down stand-status stand-logs stand-smoke stand-agent-smoke stage1-test stage1-run planner-draft planner-openrouter scenario-generate scenario-validate campaign-run batch-metrics guarded-validate guarded-eval evaluation-plan evaluation-run evaluation-report
 
 doctor:
 	@bash scripts/doctor.sh
@@ -62,3 +62,12 @@ guarded-validate:
 
 guarded-eval:
 	@PYTHONPATH=src uv run python scripts/run-guarded-eval.py $(GUARDED_ARGS)
+
+evaluation-plan:
+	@PYTHONPATH=src uv run python scripts/plan-evaluation.py $(EVALUATION_ARGS)
+
+evaluation-run:
+	@PYTHONPATH=src uv run python scripts/run-evaluation.py $(EVALUATION_ARGS)
+
+evaluation-report:
+	@PYTHONPATH=src uv run python scripts/report-evaluation.py $(or $(EVALUATION_MANIFEST),evaluation/historical-execution-manifest.json) $(EVALUATION_ARGS)

@@ -385,6 +385,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Run schema-valid red-team campaign scenarios.")
     parser.add_argument("--scenario", action="append", type=Path, default=None)
     parser.add_argument("--output-dir", type=Path, default=Path("output/runs"))
+    parser.add_argument("--run-id", help="Explicit unique run id for an orchestrated evaluation.")
     parser.add_argument("--freeze", action="store_true", help="Copy successful evidence into each replay directory.")
     parser.add_argument("--validate-only", action="store_true")
     args = parser.parse_args()
@@ -397,8 +398,10 @@ def main() -> int:
             print(f"OK {path}: {scenario['id']}")
         return 0
 
-    run_id = utc_run_id()
+    run_id = args.run_id or utc_run_id()
     run_dir = args.output_dir / run_id
+    if run_dir.exists():
+        parser.error(f"run directory already exists: {run_dir}")
     target = StandTarget(repo_root=repo_root)
     ready = target.ensure_ready()
     runtime = target.inspect_runtime()

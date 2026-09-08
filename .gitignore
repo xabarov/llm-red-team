@@ -14,6 +14,10 @@ tmp/
 output/
 *.log
 
+# Reproducible G5 machine reports; keep compact reviewed Markdown in Git.
+evaluation/plan.json
+evaluation/historical-reconstruction.json
+
 # Large/source research artifacts and disposable OCR.
 research/papers/original/*
 !research/papers/original/README.md

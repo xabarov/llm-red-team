@@ -1,0 +1,73 @@
+{
+  "schema_version": "evaluation-execution/v1",
+  "manifest_kind": "historical-calibration",
+  "matrix_id": "g5-historical-calibration-v1",
+  "plan_sha256": "848fadd68e9f4b73ad10b20515ec6d5a3521e8adf6ce2be91b45bd2a6348d7d8",
+  "stand_revision": "f56b68b6a552d8cac6bb5e053ec28f5565d7555d",
+  "session_id": "historical-calibration",
+  "expected_modes": ["vulnerable", "protected"],
+  "expected_artifacts": [
+    {"model": "openai/gpt-4.1-mini", "scenario_id": "cross-user-policy-poisoning-c1-explicit-command", "repeat_index": 1},
+    {"model": "openai/gpt-4.1-mini", "scenario_id": "cross-user-policy-poisoning-c2-policy-document-soft-strict-trigger", "repeat_index": 1},
+    {"model": "openai/gpt-4.1-mini", "scenario_id": "cross-user-policy-poisoning-c3-compaction-neutral-summary", "repeat_index": 1}
+  ],
+  "artifacts": [
+    {
+      "run_id": "campaign-20260906T125522Z-641ead12",
+      "model": "openai/gpt-4.1-mini",
+      "research_model": "openai:openai/gpt-4.1-mini",
+      "summarization_model": "openai:openai/gpt-4.1-mini",
+      "repeat_index": 1,
+      "scenario_id": "cross-user-policy-poisoning-c1-explicit-command",
+      "attack_class": "C1",
+      "carrier": "direct-policy-command",
+      "maturity": "replay-ready",
+      "scenario_path": "replays/cross-user-policy-poisoning-c1-explicit-command/scenario.json",
+      "scenario_sha256": "a12eed73dc44f7f5e0fe02b1b863e89a940fc9953adba16f149fe7249928d4aa",
+      "summary_path": "output/runs/campaign-20260906T125522Z-641ead12/cross-user-policy-poisoning-c1-explicit-command/summary.json",
+      "summary_sha256": "31dffb138d4c3164c299d27341064da8d49b83586ed2ee8c38240aa3d382957f",
+      "evidence_path": "output/runs/campaign-20260906T125522Z-641ead12/cross-user-policy-poisoning-c1-explicit-command/evidence.jsonl",
+      "evidence_sha256": "7d7e9499c770e99d2d7ced52bf5e63a7ff7bc29a308a860249ff2087b6649f2c",
+      "evidence_manifest_path": "output/runs/campaign-20260906T125522Z-641ead12/cross-user-policy-poisoning-c1-explicit-command/manifest.json",
+      "evidence_manifest_sha256": "b80af7f0956cceee251f5548aef16e880524b5fb395d0d278f824bc9ac2f8a69"
+    },
+    {
+      "run_id": "campaign-20260906T175830Z-60b0d296",
+      "model": "openai/gpt-4.1-mini",
+      "research_model": "openai:openai/gpt-4.1-mini",
+      "summarization_model": "openai:openai/gpt-4.1-mini",
+      "repeat_index": 1,
+      "scenario_id": "cross-user-policy-poisoning-c2-policy-document-soft-strict-trigger",
+      "attack_class": "C2",
+      "carrier": "policy-document",
+      "maturity": "replay-ready",
+      "scenario_path": "replays/cross-user-policy-poisoning-c2-policy-document-soft-strict-trigger/scenario.json",
+      "scenario_sha256": "b5074ce9d7c987c24947f40bd5d83b4548ad7ac1bd2ca8c154a949b6603bfac4",
+      "summary_path": "output/runs/campaign-20260906T175830Z-60b0d296/cross-user-policy-poisoning-c2-policy-document-soft-strict-trigger/summary.json",
+      "summary_sha256": "879e42d9979ef73aeb869049ee6a606b84d3d37fe663cc0487dfe026d1349bd3",
+      "evidence_path": "output/runs/campaign-20260906T175830Z-60b0d296/cross-user-policy-poisoning-c2-policy-document-soft-strict-trigger/evidence.jsonl",
+      "evidence_sha256": "bac72328bb2b436f0b61285233cc0fafcda72a4a4d1b88629b956f61d95e46e6",
+      "evidence_manifest_path": "output/runs/campaign-20260906T175830Z-60b0d296/cross-user-policy-poisoning-c2-policy-document-soft-strict-trigger/manifest.json",
+      "evidence_manifest_sha256": "608cc0c830fbc5a03a688fba3c7b3744979b3e78e341cd207d694d61b0eb97a9"
+    },
+    {
+      "run_id": "campaign-20260906T175324Z-000df3cc",
+      "model": "openai/gpt-4.1-mini",
+      "research_model": "openai:openai/gpt-4.1-mini",
+      "summarization_model": "openai:openai/gpt-4.1-mini",
+      "repeat_index": 1,
+      "scenario_id": "cross-user-policy-poisoning-c3-compaction-neutral-summary",
+      "attack_class": "C3",
+      "carrier": "compaction-summary",
+      "maturity": "negative-control",
+      "scenario_path": "output/generated/scenarios/cross-user-policy-poisoning-c3-compaction-neutral-summary.json",
+      "scenario_sha256": "ae4d117d2c1b439aa747e17e3dc1e943c0f4b9b9182886b41dda983e95582a6c",
+      "summary_path": "output/runs/campaign-20260906T175324Z-000df3cc/cross-user-policy-poisoning-c3-compaction-neutral-summary/summary.json",
+      "summary_sha256": "e4f42b8610641bc84ec2c58b7fd542d9c1a238875e3d910b3d26220357e02858",
+      "evidence_path": "output/runs/campaign-20260906T175324Z-000df3cc/cross-user-policy-poisoning-c3-compaction-neutral-summary/evidence.jsonl",
+      "evidence_sha256": "d4d2d7eb202635336f47aa941d943cdc2562f5c2980589616def821caf2c78da",
+      "evidence_manifest_path": "output/runs/campaign-20260906T175324Z-000df3cc/cross-user-policy-poisoning-c3-compaction-neutral-summary/manifest.json",
+      "evidence_manifest_sha256": "46c01a8a7970d1775b12f42134f874d9932cdb0ead2277762bd9e921ebbe7eb3"
+    }
+  ]
+}

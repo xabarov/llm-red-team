@@ -17,6 +17,8 @@ make stage1-run
 make batch-metrics
 make guarded-validate
 make guarded-eval
+make evaluation-plan
+make evaluation-report
 ```
 
 `stand-up` использует OpenRouter при наличии `OPENROUTER_API_KEY` в `.env`.
@@ -51,6 +53,9 @@ make guarded-eval
 Четыре offline memory-defense режима, selective repair и F1/F2:
 [`docs/memory-defense.md`](docs/memory-defense.md). Они исполняются над
 синтетическим captured snapshot и также не требуют стенда или LLM.
+
+Ограниченная G5 matrix, бюджетный approval gate и восстановление агрегатов из
+evidence: [`docs/evaluation-matrix.md`](docs/evaluation-matrix.md).
 
 ## Правило контекста
 
