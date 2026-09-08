@@ -434,6 +434,7 @@ def build_reconstruction(manifest: dict[str, Any], *, repo_root: Path) -> dict[s
     matrix_aggregate = _matrix_aggregate(cases, sources)
     reconstruction = {
         "schema_version": "evaluation-reconstruction/v1",
+        "manifest_kind": manifest["manifest_kind"],
         "matrix_id": manifest["matrix_id"],
         "plan_sha256": manifest["plan_sha256"],
         "sources": sources,

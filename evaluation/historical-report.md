@@ -2,7 +2,7 @@
 
 - Matrix: `g5-historical-calibration-v1`
 - Plan SHA-256: `848fadd68e9f4b73ad10b20515ec6d5a3521e8adf6ce2be91b45bd2a6348d7d8`
-- Aggregate SHA-256: `c03f89a343dd7c1657933e61c8b6efe99610da048eb53315038ae7468d7eb6c4`
+- Aggregate SHA-256: `dcbf14eb829e67d7ce99655bd444ced37497287268d07742ee19db4064677a6f`
 - Evidence-linked case summaries: `3`
 
 # Matrix breakdown

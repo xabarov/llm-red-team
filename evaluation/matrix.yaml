@@ -91,7 +91,7 @@ live:
     metrics: [MPSR, recall_rate, MESR, E2E_ASR, attempts, wall_time, cost]
     unavailable_without_new_instrumentation: [stealth, provider_token_cost]
     manual_review_rubric: evaluation/judge-rubric.yaml
-    manual_review_rubric_sha256: be2bc3fd4cf788adad2ecc30b68ef890f42d27170f0d48e4d2a0f7736397ab59
+    manual_review_rubric_sha256: b101ba9493a010bb0eb39c69b7c08a7cacfda9ace8ad85bb98cadf0555badc51
 
 offline:
   kind: offline-memory-defense

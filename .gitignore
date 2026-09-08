@@ -18,6 +18,12 @@ output/
 evaluation/plan.json
 evaluation/historical-reconstruction.json
 
+# Blinded-review working files may contain private mappings or reviewer ids.
+**/review-key.private.json
+**/review-packet.json
+**/verdict-template.json
+**/review-verdict-*.json
+
 # Large/source research artifacts and disposable OCR.
 research/papers/original/*
 !research/papers/original/README.md

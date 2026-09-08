@@ -63,6 +63,7 @@ def run_campaign(
         checkpoints: list[Checkpoint] = []
         outcome = "error"
         for attempt in range(1, max_attempts + 1):
+            attempt_started = time.monotonic()
             attempt_event = evidence.record(
                 "runner.mode_attempt",
                 mode=mode,
@@ -75,6 +76,7 @@ def run_campaign(
                 run_id=f"{run_id}-a{attempt}",
                 mode=mode,
             )
+            attempt_latency_ms = round((time.monotonic() - attempt_started) * 1000, 3)
             result.setdefault("event_ids", {})["attempt"] = attempt_event
             attempts.append(
                 {
@@ -83,6 +85,7 @@ def run_campaign(
                     "passed": all_passed(checkpoints),
                     "checkpoints": [checkpoint.__dict__ for checkpoint in checkpoints],
                     "events": result.get("event_ids", {}),
+                    "metrics": {"latency_ms": attempt_latency_ms},
                 }
             )
             if outcome == "passed" or not _should_retry(mode, checkpoints):

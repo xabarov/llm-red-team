@@ -1,4 +1,9 @@
-.PHONY: doctor context-check stand-bootstrap stand-up stand-up-openrouter stand-up-local stand-down stand-status stand-logs stand-smoke stand-agent-smoke stage1-test stage1-run planner-draft planner-openrouter scenario-generate scenario-validate campaign-run batch-metrics guarded-validate guarded-eval evaluation-plan evaluation-run evaluation-report
+.PHONY: doctor context-check stand-bootstrap stand-up stand-up-openrouter
+.PHONY: stand-up-local stand-down stand-status stand-logs stand-smoke stand-agent-smoke
+.PHONY: stage1-test stage1-run planner-draft planner-openrouter scenario-generate
+.PHONY: scenario-validate campaign-run batch-metrics guarded-validate guarded-eval
+.PHONY: evaluation-plan evaluation-run evaluation-report evaluation-review-prepare
+.PHONY: evaluation-combined-report
 
 doctor:
 	@bash scripts/doctor.sh
@@ -70,4 +75,14 @@ evaluation-run:
 	@PYTHONPATH=src uv run python scripts/run-evaluation.py $(EVALUATION_ARGS)
 
 evaluation-report:
-	@PYTHONPATH=src uv run python scripts/report-evaluation.py $(or $(EVALUATION_MANIFEST),evaluation/historical-execution-manifest.json) $(EVALUATION_ARGS)
+	@PYTHONPATH=src uv run python scripts/report-evaluation.py \
+		$(or $(EVALUATION_MANIFEST),evaluation/historical-execution-manifest.json) $(EVALUATION_ARGS)
+
+evaluation-review-prepare:
+	@PYTHONPATH=src uv run python scripts/prepare-review.py \
+		$(or $(EVALUATION_MANIFEST),evaluation/historical-execution-manifest.json) \
+		--output-dir $(or $(REVIEW_OUTPUT_DIR),output/reviews/current)
+
+evaluation-combined-report:
+	@PYTHONPATH=src uv run python scripts/build-evaluation-report.py \
+		$(or $(EVALUATION_MANIFEST),evaluation/historical-execution-manifest.json) $(EVALUATION_ARGS)

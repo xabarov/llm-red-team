@@ -1,7 +1,7 @@
 # Evaluation plan: g5-core-c1-c3-v1
 
 - Status: `proposed`
-- Plan SHA-256: `573e8d642df94cecc8b1ac55e02b18516de88b621c9cf16619eb5b76b7b0c95a`
+- Plan SHA-256: `372208a3785a098b6ef71ff5be268883c8ac7eeae61ac521b3f5afbd6b27a2e5`
 - Live scenario runs / mode cells: `18` / `36`
 - Expected / maximum attempts: `84` / `108`
 - Expected / maximum LLM calls: `504` / `1836` (assumed)

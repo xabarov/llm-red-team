@@ -53,7 +53,8 @@ timestamp в evidence. Экстраполяция на две модели и т
 Attempts сохраняются по mode, включая асимметрию C2: vulnerable 3, protected 1.
 Перезапуски стенда в эту оценку не входят.
 
-Текущий стенд не сохраняет provider usage. Поэтому следующие величины явно
+Текущий стенд не сохраняет provider token/cost usage. Новый campaign runner
+измеряет wall-clock latency каждого attempt, но следующие величины явно
 являются предположениями:
 
 - expected 6 LLM calls на attempt;
@@ -153,7 +154,7 @@ PYTHONPATH=src uv run python scripts/report-evaluation.py \
 |---|---|---|
 | MPSR, recall, MESR, E2E-ASR | deterministic checkpoints live matrix | автоматически + Wilson 95% CI |
 | Attempts | case summaries | автоматически |
-| Wall time | timestamps evidence | измеряется; историческая оценка уже привязана к hashes |
+| Wall time / attempt latency | timestamps evidence / новый runner | измеряется; историческая оценка уже привязана к hashes |
 | Cost/tokens | provider usage | `n/a` до instrumentation; pre-run cost только estimated |
 | SRSR | отдельный G4 offline track | 1.0 на frozen synthetic case; не live ASR |
 | FPR/utility | G4 F2 benign preservation | preliminary single-case gate, не population estimate |
@@ -166,6 +167,42 @@ ordinal stealth proxy. Это протокол будущей разметки, 
 Headline ASR строится отдельно только по `replay-ready`; полный scope вместе с
 C3 всегда подписывается как `including negative controls` и имеет breakdown по
 maturity.
+
+Blinded packet готовится только после полной evidence validation:
+
+```bash
+EVALUATION_MANIFEST=output/evaluations/<session>/execution-manifest.json \
+REVIEW_OUTPUT_DIR=output/evaluations/<session>/review \
+make evaluation-review-prepare
+```
+
+`review-packet.json` содержит только opaque `REV-*`, prompts и response. Связь с
+model/auth/class/outcome хранится отдельно в `review-key.private.json`; оба файла
+привязаны к rubric и plan hashes, а hash commitment private key записан в packet
+до начала разметки. Заполненные verdict-файлы агрегируются так:
+
+```bash
+PYTHONPATH=src uv run python scripts/report-review.py \
+  --packet output/evaluations/<session>/review/review-packet.json \
+  --key output/evaluations/<session>/review/review-key.private.json \
+  --verdict <reviewer-a.json> --verdict <reviewer-b.json> \
+  --output output/evaluations/<session>/review/report.json
+```
+
+При любом расхождении двух основных reviewer нужен третий verdict; для ordinal
+поля без большинства report не строится.
+
+Финальный объединённый отчёт собирает live reconstruction, frozen G4 defense и
+опциональный manual review, сохраняя separation invariant:
+
+```bash
+EVALUATION_MANIFEST=output/evaluations/<session>/execution-manifest.json \
+make evaluation-combined-report
+```
+
+До платного прогона примером служит `evaluation/g5-baseline-report.md`: это
+historical calibration + frozen offline defense, а не финальный двухмодельный
+результат.
 
 ## Ограничения для защиты
 

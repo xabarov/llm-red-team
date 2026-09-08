@@ -19,6 +19,8 @@ make guarded-validate
 make guarded-eval
 make evaluation-plan
 make evaluation-report
+make evaluation-review-prepare
+make evaluation-combined-report
 ```
 
 `stand-up` использует OpenRouter при наличии `OPENROUTER_API_KEY` в `.env`.
