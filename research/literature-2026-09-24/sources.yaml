@@ -1,0 +1,820 @@
+review_date: '2026-09-24'
+scope: Stateful agentic red teaming; memory poisoning; evidence and utility; authorized local banking stand
+method: Targeted critical literature review, not exhaustive systematic review
+paper_count: 27
+official_source_count: 8
+artifact_note: HTML snapshots and technical extraction are ignored local files under output/. SHA-256 describes
+  fetched HTML bytes, not PDF. Existing PDF provenance stays in research/sources.yaml. No new PDF was downloaded
+  for this review.
+sources:
+- citation_key: P01
+  id: indirect-prompt-injection-2302.12173
+  kind: paper
+  role: background
+  title: 'Not what you''ve signed up for: Compromising Real-World LLM-Integrated Applications with Indirect Prompt
+    Injection'
+  authors:
+  - Greshake, Kai
+  - Abdelnabi, Sahar
+  - Mishra, Shailesh
+  - Endres, Christoph
+  - Holz, Thorsten
+  - Fritz, Mario
+  year: 2023
+  first_submitted: '2023-02-23'
+  version: '2'
+  url: https://arxiv.org/abs/2302.12173v2
+  full_text_url: https://arxiv.org/html/2302.12173v2
+  doi: 10.48550/arXiv.2302.12173
+  accessed: '2026-09-24'
+  publication_status: arXiv preprint; venue not independently verified
+  license: arXiv.org perpetual non-exclusive license
+  reading_level: selected_full_text_sections
+  locators: §3–4, §4.3, §5.2
+  cache_file: output/literature-2026-09-24/2302.12173.html.html
+  sha256: efc0799ef830c9a0d5e149ee8871085d96c624193e316e476b1a632db3ef7efa
+- citation_key: P02
+  id: poisonedrag-2402.07867
+  kind: paper
+  role: background
+  title: 'PoisonedRAG: Knowledge Corruption Attacks to Retrieval-Augmented Generation of Large Language Models'
+  authors:
+  - Zou, Wei
+  - Geng, Runpeng
+  - Wang, Binghui
+  - Jia, Jinyuan
+  year: 2024
+  first_submitted: '2024-02-12'
+  version: '3'
+  url: https://arxiv.org/abs/2402.07867v3
+  full_text_url: https://arxiv.org/html/2402.07867v3
+  doi: 10.48550/arXiv.2402.07867
+  accessed: '2026-09-24'
+  publication_status: USENIX Security 2025
+  license: arXiv.org perpetual non-exclusive license
+  reading_level: selected_full_text_sections
+  locators: §3.1, §4–6, §8
+  cache_file: output/literature-2026-09-24/2402.07867.html.html
+  sha256: 2e612a2d74fa58ae6a25ccdccf8d567c1b95636313fdcd451184afff1dee086f
+  venue_evidence_url: https://www.usenix.org/conference/usenixsecurity25/presentation/zou-poisonedrag
+- citation_key: P03
+  id: agentpoison-2407.12784
+  kind: paper
+  role: core
+  title: 'AgentPoison: Red-teaming LLM Agents via Poisoning Memory or Knowledge Bases'
+  authors:
+  - Chen, Zhaorun
+  - Xiang, Zhen
+  - Xiao, Chaowei
+  - Song, Dawn
+  - Li, Bo
+  year: 2024
+  first_submitted: '2024-07-17'
+  version: '1'
+  url: https://arxiv.org/abs/2407.12784v1
+  full_text_url: https://arxiv.org/html/2407.12784v1
+  doi: 10.48550/arXiv.2407.12784
+  accessed: '2026-09-24'
+  publication_status: NeurIPS 2024
+  license: arXiv.org perpetual non-exclusive license
+  reading_level: selected_full_text_sections
+  locators: §3.2, §4.1–4.2; Table 1; Appendix A.1.2
+  cache_file: output/literature-2026-09-24/2407.12784v1.html.html
+  sha256: 9f8d652f56155aa8115ba2f74136c161d7354544b6d2ccfb89fe19e7f263dd9c
+  venue_evidence_url: https://proceedings.neurips.cc/paper_files/paper/2024/hash/eb113910e9c3f6242541c1652e30dfd6-Abstract-Conference.html
+- citation_key: P04
+  id: minja-2503.03704
+  kind: paper
+  role: core
+  title: Memory Injection Attacks on LLM Agents via Query-Only Interaction
+  authors:
+  - Dong, Shen
+  - Xu, Shaochen
+  - He, Pengfei
+  - Li, Yige
+  - Tang, Jiliang
+  - Liu, Tianming
+  - Liu, Hui
+  - Xiang, Zhen
+  year: 2025
+  first_submitted: '2025-03-05'
+  version: '5'
+  url: https://arxiv.org/abs/2503.03704v5
+  full_text_url: https://arxiv.org/html/2503.03704v5
+  doi: 10.48550/arXiv.2503.03704
+  accessed: '2026-09-24'
+  publication_status: NeurIPS 2025
+  license: CC BY 4.0
+  reading_level: selected_full_text_sections
+  locators: §3–5; Table 1; Appendix K
+  cache_file: output/literature-2026-09-24/2503.03704v5.html.html
+  sha256: 9c8d52a3c4731130fb45cd1d16f567ac9bf10ff2fee5e6fb7573f0feeace9454
+  venue_evidence_url: https://proceedings.neurips.cc/paper_files/paper/2025/hash/42a97bbd9844d2bf68596730af80bcdf-Abstract-Conference.html
+- citation_key: P05
+  id: memorygraft-2512.16962
+  kind: paper
+  role: core
+  title: 'MemoryGraft: Persistent Compromise of LLM Agents via Poisoned Experience Retrieval'
+  authors:
+  - Srivastava, Saksham Sahai
+  - He, Haoyu
+  year: 2025
+  first_submitted: '2025-12-18'
+  version: '1'
+  url: https://arxiv.org/abs/2512.16962v1
+  full_text_url: https://arxiv.org/html/2512.16962v1
+  doi: 10.48550/arXiv.2512.16962
+  accessed: '2026-09-24'
+  publication_status: arXiv preprint; venue not independently verified
+  license: CC BY 4.0
+  reading_level: selected_full_text_sections
+  locators: §3.3–5, §8; особенно §5.3 (PRP)
+  cache_file: output/literature-2026-09-24/2512.16962v1.html.html
+  sha256: eb8adc8098636854fc3a29e55d3ed38480922c07a600000a262b6a012f654600
+- citation_key: P06
+  id: memory-attack-defense-2601.05504
+  kind: paper
+  role: core
+  title: Memory Poisoning Attack and Defense on Memory Based LLM-Agents
+  authors:
+  - Sunil, Balachandra Devarangadi
+  - Sinha, Isheeta
+  - Maheshwari, Piyush
+  - Todmal, Shantanu
+  - Malik, Shreyan
+  - Mishra, Shuchi
+  year: 2026
+  first_submitted: '2026-01-09'
+  version: '1'
+  url: https://arxiv.org/abs/2601.05504v1
+  full_text_url: https://arxiv.org/html/2601.05504v1
+  doi: 10.48550/arXiv.2601.05504
+  accessed: '2026-09-24'
+  publication_status: arXiv preprint; venue not independently verified
+  license: CC BY 4.0
+  reading_level: selected_full_text_sections
+  locators: §3, §5.2–5.3; Table 1
+  cache_file: output/literature-2026-09-24/2601.05504v1.html.html
+  sha256: 35e1417f9fc1697db69a6d3e203829ca05f8ed6a9aa92c0f1197dc3f2894b019
+- citation_key: P07
+  id: etamp-2604.02623
+  kind: paper
+  role: core
+  title: 'Poison Once, Exploit Forever: Environment-Injected Memory Poisoning Attacks on Web Agents'
+  authors:
+  - Zou, Wei
+  - Dong, Mingwen
+  - Calvo, Miguel Romero
+  - Chang, Shuaichen
+  - Guo, Jiang
+  - Lee, Dongkyu
+  - Niu, Xing
+  - Ma, Xiaofei
+  - Qi, Yanjun
+  - Jiang, Jiarong
+  year: 2026
+  first_submitted: '2026-04-03'
+  version: '1'
+  url: https://arxiv.org/abs/2604.02623v1
+  full_text_url: https://arxiv.org/html/2604.02623v1
+  doi: 10.48550/arXiv.2604.02623
+  accessed: '2026-09-24'
+  publication_status: arXiv preprint; venue not independently verified
+  license: CC BY-NC-SA 4.0
+  reading_level: selected_full_text_sections
+  locators: §2.1–3.3; Table 1; Appendix A.1/A.3/A.7
+  cache_file: output/literature-2026-09-24/2604.02623v1.html.html
+  sha256: 390704889941aafeb672794bb1a8966068663cf23de3cb7f014db55a9c395d6f
+  metadata_note: arXiv abstract metadata repeats Wei Zou; author list normalized against the full HTML title block
+    (10 authors).
+- citation_key: P08
+  id: memmorph-2605.26154
+  kind: paper
+  role: core
+  title: 'MemMorph: Tool Hijacking in LLM Agents via Memory Poisoning'
+  authors:
+  - Zhang, Xuanye
+  - Zheng, Yongsen
+  - Xu, Zhuqin
+  - Zhou, Kaiyu
+  - Shen, Bowen
+  - Ou, Haoran
+  - Zhang, Tianwei
+  - Lam, Kwok-Yan
+  year: 2026
+  first_submitted: '2026-05-24'
+  version: '1'
+  url: https://arxiv.org/abs/2605.26154v1
+  full_text_url: https://arxiv.org/html/2605.26154v1
+  doi: 10.48550/arXiv.2605.26154
+  accessed: '2026-09-24'
+  publication_status: arXiv preprint; venue not independently verified
+  license: arXiv.org perpetual non-exclusive license
+  reading_level: selected_full_text_sections
+  locators: §3.2, §4, §5.1–5.4, §7
+  cache_file: output/literature-2026-09-24/2605.26154v1.html.html
+  sha256: 9f6353efa2e7635bcbf62db93df5cc76a1721f8679dcdcc40c33f22e771da9fb
+- citation_key: P09
+  id: mpbench-2606.04329
+  kind: paper
+  role: core
+  title: 'From Untrusted Input to Trusted Memory: A Systematic Study of Memory Poisoning Attacks in LLM Agents'
+  authors:
+  - Dash, Pritam
+  - Ge, Tongyu
+  - Jain, Aditi
+  - Shah, Tanmay
+  - Shang, Zhiwei
+  year: 2026
+  first_submitted: '2026-06-03'
+  version: '2'
+  url: https://arxiv.org/abs/2606.04329v2
+  full_text_url: https://arxiv.org/html/2606.04329v2
+  doi: 10.48550/arXiv.2606.04329
+  accessed: '2026-09-24'
+  publication_status: arXiv preprint; venue not independently verified
+  license: CC BY 4.0
+  reading_level: selected_HTML_sections_and_existing_page_by_page_PDF_summary
+  locators: §2–5; PDF с. 2–9, 12–14; локальная постраничная карта
+  cache_file: output/literature-2026-09-24/2606.04329v2.html.html
+  sha256: d2eb9719c483630fa0072229890c1430b42c1c44b29968019944b42a844652dd
+  existing_catalog_id: untrusted-input-trusted-memory-2606.04329
+  existing_summary: ../papers/ru/untrusted-input-trusted-memory-2606.04329/summary.md
+- citation_key: P10
+  id: ghostwriter-2607.06595
+  kind: paper
+  role: core
+  title: 'When Agents Remember Too Much: Memory Poisoning Attacks on Large Language Model Agents'
+  authors:
+  - Torres, George
+  - Shrestha, Sharad
+  - Misra, Satyajayant
+  year: 2026
+  first_submitted: '2026-07-06'
+  version: '1'
+  url: https://arxiv.org/abs/2607.06595v1
+  full_text_url: https://arxiv.org/html/2607.06595v1
+  doi: 10.48550/arXiv.2607.06595
+  accessed: '2026-09-24'
+  publication_status: arXiv preprint; venue not independently verified
+  license: CC BY 4.0
+  reading_level: selected_HTML_sections_and_existing_page_by_page_PDF_summary
+  locators: §III–VIII; локальная постраничная карта PDF
+  cache_file: output/literature-2026-09-24/2607.06595v1.html.html
+  sha256: 3c6b9a426ac7ad4db16691e493b5d3373d089dd182243bfc93d5cd81554d3a4c
+  existing_catalog_id: agents-remember-too-much-2607.06595
+  existing_summary: ../papers/ru/agents-remember-too-much-2607.06595/summary.md
+- citation_key: P11
+  id: memsecbench-2607.27080
+  kind: paper
+  role: core
+  title: 'MemSecBench: Tracking Agent Memory Poisoning from Persistence to Consequence and Repair'
+  authors:
+  - Chen, Xuanze
+  - Xie, Xukang
+  - Fu, Wentao
+  - Zhou, Jiajun
+  - Yu, Shanqing
+  - Xuan, Qi
+  year: 2026
+  first_submitted: '2026-07-29'
+  version: '1'
+  url: https://arxiv.org/abs/2607.27080v1
+  full_text_url: https://arxiv.org/html/2607.27080v1
+  doi: 10.48550/arXiv.2607.27080
+  accessed: '2026-09-24'
+  publication_status: arXiv preprint; venue not independently verified
+  license: arXiv.org perpetual non-exclusive license
+  reading_level: selected_HTML_sections_and_existing_page_by_page_PDF_summary
+  locators: Methodology/Experiments; Appendix E; PDF с. 3–6, 17–23
+  cache_file: output/literature-2026-09-24/2607.27080v1.html.html
+  sha256: dc7dac46e476f65d731dad380e2b2d09471d07dda36497aaf5fd5c1684f13161
+  existing_catalog_id: memsecbench-2607.27080
+  existing_summary: ../papers/ru/memsecbench-2607.27080/summary.md
+- citation_key: P12
+  id: injecmem-2608.23471
+  kind: paper
+  role: core
+  title: 'InjecMEM: Memory Injection Attack on LLM Agent Memory Systems'
+  authors:
+  - Tian, Hanling
+  - Zhang, Gengyu
+  - Sha, Zeyang
+  - Wang, Jingying
+  - Liu, Yuhang
+  - Huang, Zhehao
+  - Yang, Kun
+  - Huang, Xiaolin
+  year: 2026
+  first_submitted: '2026-08-24'
+  version: '1'
+  url: https://arxiv.org/abs/2608.23471v1
+  full_text_url: https://arxiv.org/html/2608.23471v1
+  doi: 10.48550/arXiv.2608.23471
+  accessed: '2026-09-24'
+  publication_status: arXiv preprint; venue not independently verified
+  license: arXiv.org perpetual non-exclusive license
+  reading_level: selected_full_text_sections
+  locators: §3–4; Tables 2–5; §4.2 MemGPT Evaluation
+  cache_file: output/literature-2026-09-24/2608.23471v1.html.html
+  sha256: c23bb29d2ef455f516b8776aa7fbd2c0d996294f26b3f0cc0df85ca45069f11f
+- citation_key: P13
+  id: pipepoison-2609.00523
+  kind: paper
+  role: core
+  title: Transferable End-to-End Optimization for Indirect Long-Term Memory Poisoning in LLM Agents
+  authors:
+  - Zang, Chuanchao
+  - Wang, Jianing
+  - Chen, Wenyu
+  - Meng, Xiangtao
+  - Wang, Li
+  - Gao, Xinyu
+  - Li, Zheng
+  - Guo, Shanqing
+  year: 2026
+  first_submitted: '2026-09-01'
+  version: '1'
+  url: https://arxiv.org/abs/2609.00523v1
+  full_text_url: https://arxiv.org/html/2609.00523v1
+  doi: 10.48550/arXiv.2609.00523
+  accessed: '2026-09-24'
+  publication_status: arXiv preprint; venue not independently verified
+  license: CC BY 4.0
+  reading_level: selected_full_text_sections
+  locators: §2.4, §3.1–3.3, §4.1–4.5, §5
+  cache_file: output/literature-2026-09-24/2609.00523v1.html.html
+  sha256: 49551595d76582dbf165f6e62743afecbd09988a481d5370e4c7c33c4dcb539a
+- citation_key: P14
+  id: pmpa-2609.13889
+  kind: paper
+  role: core
+  title: 'When Malicious Instructions Persist: Persistent Memory Poisoning Attack on Harness-Based Agents'
+  authors:
+  - Huang, Shuhuai
+  - Zhang, Jingfeng
+  - Jia, Hong
+  year: 2026
+  first_submitted: '2026-09-12'
+  version: '1'
+  url: https://arxiv.org/abs/2609.13889v1
+  full_text_url: https://arxiv.org/html/2609.13889v1
+  doi: 10.48550/arXiv.2609.13889
+  accessed: '2026-09-24'
+  publication_status: arXiv preprint; venue not independently verified
+  license: arXiv.org perpetual non-exclusive license
+  reading_level: selected_full_text_sections
+  locators: §3.1–3.4; §4.1–4.3; Table 1
+  cache_file: output/literature-2026-09-24/2609.13889.html.html
+  sha256: 428f7f65a216aa036889552b472e0174e68bc1bb1cb066350b21eeb3ebe74d59
+- citation_key: P15
+  id: injecagent-2403.02691
+  kind: paper
+  role: benchmark
+  title: 'InjecAgent: Benchmarking Indirect Prompt Injections in Tool-Integrated Large Language Model Agents'
+  authors:
+  - Zhan, Qiusi
+  - Liang, Zhixiang
+  - Ying, Zifan
+  - Kang, Daniel
+  year: 2024
+  first_submitted: '2024-03-05'
+  version: '3'
+  url: https://arxiv.org/abs/2403.02691v3
+  full_text_url: https://arxiv.org/html/2403.02691v3
+  doi: 10.48550/arXiv.2403.02691
+  accessed: '2026-09-24'
+  publication_status: Findings of ACL 2024
+  license: arXiv.org perpetual non-exclusive license
+  reading_level: selected_full_text_sections
+  locators: §2.1–2.3; Table 3; §8; Appendix C
+  cache_file: output/literature-2026-09-24/2403.02691.html.html
+  sha256: 3350d483880929b0f489196d1a97d1c38622625ae7b365d1cf419acf9a92d241
+  venue_evidence_url: https://aclanthology.org/2024.findings-acl.624/
+- citation_key: P16
+  id: agentdojo-2406.13352
+  kind: paper
+  role: benchmark
+  title: 'AgentDojo: A Dynamic Environment to Evaluate Prompt Injection Attacks and Defenses for LLM Agents'
+  authors:
+  - Debenedetti, Edoardo
+  - Zhang, Jie
+  - Balunović, Mislav
+  - Beurer-Kellner, Luca
+  - Fischer, Marc
+  - Tramèr, Florian
+  year: 2024
+  first_submitted: '2024-06-19'
+  version: '3'
+  url: https://arxiv.org/abs/2406.13352v3
+  full_text_url: https://arxiv.org/html/2406.13352v3
+  doi: 10.48550/arXiv.2406.13352
+  accessed: '2026-09-24'
+  publication_status: NeurIPS 2024, Datasets and Benchmarks
+  license: arXiv.org perpetual non-exclusive license
+  reading_level: selected_full_text_sections
+  locators: §3.1–3.4; Appendix A
+  cache_file: output/literature-2026-09-24/2406.13352.html.html
+  sha256: 7b6e97faaedcf0e1b5f3635b92a0da33afbe8529699d54a5c44ad58ce2fa8b02
+  venue_evidence_url: https://proceedings.nips.cc/paper_files/paper/2024/hash/97091a5177d8dc64b1da8bf3e1f6fb54-Abstract-Datasets_and_Benchmarks_Track.html
+- citation_key: P17
+  id: asb-2410.02644
+  kind: paper
+  role: benchmark
+  title: 'Agent Security Bench (ASB): Formalizing and Benchmarking Attacks and Defenses in LLM-based Agents'
+  authors:
+  - Zhang, Hanrong
+  - Huang, Jingyuan
+  - Mei, Kai
+  - Yao, Yifei
+  - Wang, Zhenting
+  - Zhan, Chenlu
+  - Wang, Hongwei
+  - Zhang, Yongfeng
+  year: 2024
+  first_submitted: '2024-10-03'
+  version: '4'
+  url: https://arxiv.org/abs/2410.02644v4
+  full_text_url: https://arxiv.org/html/2410.02644v4
+  doi: 10.48550/arXiv.2410.02644
+  accessed: '2026-09-24'
+  publication_status: ICLR 2025
+  license: arXiv.org perpetual non-exclusive license
+  reading_level: selected_full_text_sections
+  locators: §3–4; Appendix C.2.3/C.2.6
+  cache_file: output/literature-2026-09-24/2410.02644.html.html
+  sha256: 85bab447cf5c3c692c7d3dae2785f0bcc6a9e4f8d8e15da9aac5cb6ec976054b
+  venue_evidence_url: https://github.com/agiresearch/ASB/blob/main/README.md
+- citation_key: P18
+  id: adaptive-attacks-2503.00061
+  kind: paper
+  role: evaluation
+  title: Adaptive Attacks Break Defenses Against Indirect Prompt Injection Attacks on LLM Agents
+  authors:
+  - Zhan, Qiusi
+  - Fang, Richard
+  - Panchal, Henil Shalin
+  - Kang, Daniel
+  year: 2025
+  first_submitted: '2025-02-27'
+  version: '2'
+  url: https://arxiv.org/abs/2503.00061v2
+  full_text_url: https://arxiv.org/html/2503.00061v2
+  doi: 10.48550/arXiv.2503.00061
+  accessed: '2026-09-24'
+  publication_status: arXiv preprint; venue not independently verified
+  license: CC BY 4.0
+  reading_level: selected_full_text_sections
+  locators: §4–6, §10
+  cache_file: output/literature-2026-09-24/2503.00061.html.html
+  sha256: 8855ef1a24f56f5bbc004c580074aa1bee3763e669ee2fc1dde14e3ae1299fd4
+- citation_key: P19
+  id: attacker-moves-second-2510.09023
+  kind: paper
+  role: evaluation
+  title: 'The Attacker Moves Second: Stronger Adaptive Attacks Bypass Defenses Against Llm Jailbreaks and Prompt
+    Injections'
+  authors:
+  - Nasr, Milad
+  - Carlini, Nicholas
+  - Sitawarin, Chawin
+  - Schulhoff, Sander V.
+  - Hayes, Jamie
+  - Ilie, Michael
+  - Pluto, Juliette
+  - Song, Shuang
+  - Chaudhari, Harsh
+  - Shumailov, Ilia
+  - Thakurta, Abhradeep
+  - Xiao, Kai Yuanqing
+  - Terzis, Andreas
+  - Tramèr, Florian
+  year: 2025
+  first_submitted: '2025-10-10'
+  version: '1'
+  url: https://arxiv.org/abs/2510.09023v1
+  full_text_url: https://arxiv.org/html/2510.09023v1
+  doi: 10.48550/arXiv.2510.09023
+  accessed: '2026-09-24'
+  publication_status: arXiv preprint; venue not independently verified
+  license: CC BY 4.0
+  reading_level: selected_full_text_sections
+  locators: §3–6; Appendix F
+  cache_file: output/literature-2026-09-24/2510.09023v1.html.html
+  sha256: a343a65b1fd91ae3f1afadda390589cb223bdafd4511faaf08614de045e773f2
+- citation_key: P20
+  id: camel-2503.18813
+  kind: paper
+  role: defense
+  title: Defeating Prompt Injections by Design
+  authors:
+  - Debenedetti, Edoardo
+  - Shumailov, Ilia
+  - Fan, Tianqi
+  - Hayes, Jamie
+  - Carlini, Nicholas
+  - Fabian, Daniel
+  - Kern, Christoph
+  - Shi, Chongyang
+  - Terzis, Andreas
+  - Tramèr, Florian
+  year: 2025
+  first_submitted: '2025-03-24'
+  version: '2'
+  url: https://arxiv.org/abs/2503.18813v2
+  full_text_url: https://arxiv.org/html/2503.18813v2
+  doi: 10.48550/arXiv.2503.18813
+  accessed: '2026-09-24'
+  publication_status: arXiv preprint; venue not independently verified
+  license: CC BY 4.0
+  reading_level: selected_full_text_sections
+  locators: §3–5, §7, §9; изучена v2
+  cache_file: output/literature-2026-09-24/2503.18813.html.html
+  sha256: b5cd7970e905f1504439c3eddb3855ab18d951d10bf806ec2f5f3baa02ca8a51
+- citation_key: P21
+  id: tma-nm-2606.24322
+  kind: paper
+  role: defense
+  title: 'Securing LLM-Agent Long-Term Memory Against Poisoning: Non-Malleable, Origin-Bound Authority with Machine-Checked
+    Guarantees'
+  authors:
+  - Louck, Yedidel
+  year: 2026
+  first_submitted: '2026-06-23'
+  version: '1'
+  url: https://arxiv.org/abs/2606.24322v1
+  full_text_url: https://arxiv.org/html/2606.24322v1
+  doi: 10.48550/arXiv.2606.24322
+  accessed: '2026-09-24'
+  publication_status: arXiv preprint; venue not independently verified
+  license: arXiv.org perpetual non-exclusive license
+  reading_level: selected_full_text_sections
+  locators: §II–VI; §IX Limitations
+  cache_file: output/literature-2026-09-24/2606.24322v1.html.html
+  sha256: 8e019b014b75d6d42eb8c86d659b87d4ae1bae8dfb780a1e02ccf8d03e5775fe
+- citation_key: P22
+  id: smsr-2606.12703
+  kind: paper
+  role: defense
+  title: 'SMSR: Certified Defence Against Runtime Memory Poisoning in Persistent LLM Agent Systems'
+  authors:
+  - Sharma, Tarun
+  year: 2026
+  first_submitted: '2026-06-10'
+  version: '1'
+  url: https://arxiv.org/abs/2606.12703v1
+  full_text_url: https://arxiv.org/html/2606.12703v1
+  doi: 10.48550/arXiv.2606.12703
+  accessed: '2026-09-24'
+  publication_status: arXiv preprint; venue not independently verified
+  license: CC BY 4.0
+  reading_level: selected_full_text_sections
+  locators: §III, §V–VI; Table I; §VII-I/K
+  cache_file: output/literature-2026-09-24/2606.12703.html.html
+  sha256: 19e29a4d67a359cfea2182ec9aad296a2dd910c429bbc0e976d6eec371dc508b
+- citation_key: P23
+  id: utility-under-attack-2608.21230
+  kind: paper
+  role: defense
+  title: 'Utility Under Attack: Agent Memory Poisoning and the Limits of Content Screening and Provenance Ranking'
+  authors:
+  - Karunanidhi, Arulnidhi
+  year: 2026
+  first_submitted: '2026-08-21'
+  version: '1'
+  url: https://arxiv.org/abs/2608.21230v1
+  full_text_url: https://arxiv.org/html/2608.21230v1
+  doi: 10.48550/arXiv.2608.21230
+  accessed: '2026-09-24'
+  publication_status: arXiv preprint; venue not independently verified
+  license: arXiv.org perpetual non-exclusive license
+  reading_level: selected_full_text_sections
+  locators: §4–7; особенно §6.3; Appendix A
+  cache_file: output/literature-2026-09-24/2608.21230v1.html.html
+  sha256: ff650122f581847ab882caed93b21935ababbf16ee0866875b0c9451649bf764
+- citation_key: P24
+  id: price-of-safety-2609.22818
+  kind: paper
+  role: utility
+  title: 'The Price of Safety: Benign-Case Utility and Token Overhead of Memory-Poisoning Defenses in LLM Agents'
+  authors:
+  - Bhowmik, Pritom
+  year: 2026
+  first_submitted: '2026-09-19'
+  version: '1'
+  url: https://arxiv.org/abs/2609.22818v1
+  full_text_url: https://arxiv.org/html/2609.22818v1
+  doi: 10.48550/arXiv.2609.22818
+  accessed: '2026-09-24'
+  publication_status: arXiv preprint; venue not independently verified
+  license: arXiv.org perpetual non-exclusive license
+  reading_level: selected_full_text_sections
+  locators: §4–7, §9; Table 3
+  cache_file: output/literature-2026-09-24/2609.22818v1.html.html
+  sha256: 7b627dffb4a1455ffc45888798dd931be051292e72842a7fae81a57df48190f5
+- citation_key: P25
+  id: longmemeval-2410.10813
+  kind: paper
+  role: utility
+  title: 'LongMemEval: Benchmarking Chat Assistants on Long-Term Interactive Memory'
+  authors:
+  - Wu, Di
+  - Wang, Hongwei
+  - Yu, Wenhao
+  - Zhang, Yuwei
+  - Chang, Kai-Wei
+  - Yu, Dong
+  year: 2024
+  first_submitted: '2024-10-14'
+  version: '2'
+  url: https://arxiv.org/abs/2410.10813v2
+  full_text_url: https://arxiv.org/html/2410.10813v2
+  doi: 10.48550/arXiv.2410.10813
+  accessed: '2026-09-24'
+  publication_status: ICLR 2025
+  license: CC BY 4.0
+  reading_level: selected_full_text_sections
+  locators: §3.2–3.3; Appendix A.4
+  cache_file: output/literature-2026-09-24/2410.10813.html.html
+  sha256: da4c3fa52b22496cb9b13b5a4e41b01a44f4542256a0e21a5bef094f18111053
+  venue_evidence_url: https://proceedings.iclr.cc/paper_files/paper/2025/file/d813d324dbf0598bbdc9c8e79740ed01-Paper-Conference.pdf
+- citation_key: P26
+  id: longmemeval-v2-2605.12493
+  kind: paper
+  role: utility
+  title: 'LongMemEval-V2: Evaluating Long-Term Agent Memory Toward Experienced Colleagues'
+  authors:
+  - Wu, Di
+  - Ji, Zixiang
+  - Kawatkar, Asmi
+  - Kwan, Bryan
+  - Gu, Jia-Chen
+  - Peng, Nanyun
+  - Chang, Kai-Wei
+  year: 2026
+  first_submitted: '2026-05-12'
+  version: '1'
+  url: https://arxiv.org/abs/2605.12493v1
+  full_text_url: https://arxiv.org/html/2605.12493v1
+  doi: 10.48550/arXiv.2605.12493
+  accessed: '2026-09-24'
+  publication_status: arXiv preprint; venue not independently verified
+  license: CC BY 4.0
+  reading_level: selected_full_text_sections
+  locators: §3.1–3.3; Appendix E.1
+  cache_file: output/literature-2026-09-24/2605.12493.html.html
+  sha256: 061fed9b2d9cc5d2676548381902856212525600efee5c13a4dbca6233eea50d
+- citation_key: P27
+  id: morris-ii-2403.02817
+  kind: paper
+  role: propagation
+  title: 'Here Comes The AI Worm: Unleashing Zero-click Worms that Target GenAI-Powered Applications'
+  authors:
+  - Cohen, Stav
+  - Bitton, Ron
+  - Nassi, Ben
+  year: 2024
+  first_submitted: '2024-03-05'
+  version: '2'
+  url: https://arxiv.org/abs/2403.02817v2
+  full_text_url: https://arxiv.org/html/2403.02817v2
+  doi: 10.48550/arXiv.2403.02817
+  accessed: '2026-09-24'
+  publication_status: arXiv preprint; venue not independently verified
+  license: CC BY-NC-ND 4.0
+  reading_level: selected_full_text_sections
+  locators: §III–IV; §VI Limitations
+  cache_file: output/literature-2026-09-24/2403.02817v2.html.html
+  sha256: e592771b3979dba9919e185588959c0195b1bd146125ce461d012421b1607b52
+- citation_key: T01
+  id: promptfoo-memory-poisoning
+  kind: official_documentation
+  title: Memory Poisoning Plugin
+  authors:
+  - Promptfoo
+  year: null
+  url: https://www.promptfoo.dev/docs/red-team/plugins/memory-poisoning/
+  accessed: '2026-09-24'
+  publication_status: official documentation; not an experimental research paper
+  license: see source terms; no full text redistributed
+  reading_level: selected_documentation_sections
+  locators: How it Works; Working With Results; Configuration
+  cache_file: output/literature-2026-09-24/T01.html
+  sha256: 0dfb24cd5bb2bdc24b47ca00dc61d1ba53d9e2908ed8f47a72bd7cab10d04d22
+- citation_key: T02
+  id: garak-agent-breaker
+  kind: official_documentation
+  title: garak.probes.agent_breaker
+  authors:
+  - NVIDIA / garak contributors
+  year: null
+  url: https://reference.garak.ai/en/stable/probes/agent_breaker.html
+  accessed: '2026-09-24'
+  publication_status: official documentation; not an experimental research paper
+  license: see source terms; no full text redistributed
+  reading_level: selected_documentation_sections
+  locators: AgentBreaker description; multi-turn strategy
+  cache_file: output/literature-2026-09-24/T02.html
+  sha256: 5de28035a6793ac4cf937318f589deb805f6b8b9e25e38bd7233482ed7a20535
+- citation_key: T03
+  id: llamator
+  kind: official_documentation
+  title: 'LLAMATOR: Red Teaming python-framework'
+  authors:
+  - LLAMATOR-Core
+  year: null
+  url: https://github.com/LLAMATOR-Core/llamator
+  accessed: '2026-09-24'
+  publication_status: official documentation; not an experimental research paper
+  license: see source terms; no full text redistributed
+  reading_level: selected_documentation_sections
+  locators: 'README: Supported Clients; Unique Features; official documentation Attacks'
+  cache_file: output/literature-2026-09-24/T03.html
+  sha256: 353f84772ba1e228e305785a7c549b0541b5f90d587228abed4af548697b20e5
+  additional_urls:
+  - https://llamator-core.github.io/llamator/attack_descriptions.html
+- citation_key: T04
+  id: hivetrace-red
+  kind: official_documentation
+  title: HiveTrace Red
+  authors:
+  - HiveTrace
+  year: null
+  url: https://github.com/HiveTrace/HiveTraceRed
+  accessed: '2026-09-24'
+  publication_status: official documentation; not an experimental research paper
+  license: see source terms; no full text redistributed
+  reading_level: selected_documentation_sections
+  locators: 'README; official product page: How HiveTrace Red works'
+  cache_file: output/literature-2026-09-24/T04.html
+  sha256: 10b19e82fe80ad7ab75be57930081f4404243faa0efe4055ff719fcd94ca6bb7
+  additional_urls:
+  - https://hivetrace.ai/red
+- citation_key: T05
+  id: pyrit
+  kind: official_documentation
+  title: PyRIT architecture and memory
+  authors:
+  - Microsoft AI Red Team
+  year: null
+  url: https://github.com/microsoft/PyRIT/blob/main/doc/code/framework.md
+  accessed: '2026-09-24'
+  publication_status: official documentation; not an experimental research paper
+  license: see source terms; no full text redistributed
+  reading_level: selected_documentation_sections
+  locators: Framework components; Memory responsibility
+  cache_file: output/literature-2026-09-24/T05.html
+  sha256: 0b881aeaaa5108b514a8c7152489d33dfa662d9379a93305bf90ff37877af21a
+  additional_urls:
+  - https://microsoft.github.io/PyRIT/0.13.0/code/memory/memory/
+- citation_key: T06
+  id: owasp-agent-memory-guard
+  kind: official_documentation
+  title: OWASP Agent Memory Guard
+  authors:
+  - Vaishnavi Gudur; Anshul Rajkumar; OWASP
+  year: null
+  url: https://github.com/OWASP/www-project-agent-memory-guard
+  accessed: '2026-09-24'
+  publication_status: official documentation; not an experimental research paper
+  license: see source terms; no full text redistributed
+  reading_level: selected_documentation_sections
+  locators: 'README: Benchmark results; What it does; Framework integrations'
+  cache_file: output/literature-2026-09-24/T06.html
+  sha256: 29a18701617f7e3271295dcacb86d87deb35cb64e5df48721075d95ac5a2064f
+  project_pinned_revision: b3a7f34970c47d7ca6ff9e0691544b6721eb7ae2
+  revision_note: Current README reviewed; pinned dependency not updated.
+- citation_key: F01
+  id: mitre-atlas-memory
+  kind: threat_taxonomy
+  title: Memory — AML.T0080.000
+  authors:
+  - MITRE
+  year: null
+  url: https://d3fend.mitre.org/offensive-technique/attack/AML.T0080.000/
+  accessed: '2026-09-24'
+  publication_status: official documentation; not an experimental research paper
+  license: see source terms; no full text redistributed
+  reading_level: selected_documentation_sections
+  locators: Definition; official MITRE rendering of ATLAS technique
+  cache_file: output/literature-2026-09-24/F01.html
+  sha256: 3e4d63a7c64e43056ad648a1f2a07bc1c8691ba30d07d47e0cb591bcaa0c4568
+  additional_urls:
+  - https://atlas.mitre.org/techniques/AML.T0080.000
+  - https://d3fend.mitre.org/offensive-technique/attack/AML.T0080.001/
+  access_note: ATLAS frontend failed in browser tool; definition verified on official MITRE D3FEND mirror.
+- citation_key: F02
+  id: owasp-agentic-top10-2026
+  kind: threat_taxonomy
+  title: OWASP Top 10 for Agentic Applications for 2026
+  authors:
+  - OWASP GenAI Security Project
+  year: 2025
+  url: https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/
+  accessed: '2026-09-24'
+  publication_status: official documentation; not an experimental research paper
+  license: see source terms; no full text redistributed
+  reading_level: selected_documentation_sections
+  locators: About; название ASI06 дополнительно сверено по официальному README Agent Memory Guard (T06)
+  cache_file: output/literature-2026-09-24/F02.html
+  sha256: 796f06e6aed5f88eca30a2a79027b697806dbff701c1822b3cfc8de831c127b6

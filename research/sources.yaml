@@ -1,3 +1,5 @@
+# PDF corpus provenance. Broader 2026-09-24 literature-review catalog:
+# literature-2026-09-24/sources.yaml (27 papers and 8 official sources, HTML hashes).
 - id: memsecbench-2607.27080
   title: "MemSecBench: Tracking Agent Memory Poisoning from Persistence to Consequence and Repair"
   authors: ["Xuanze Chen", "Xukang Xie", "Wentao Fu", "Jiajun Zhou", "Shanqing Yu", "Qi Xuan"]
